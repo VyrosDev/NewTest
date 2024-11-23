@@ -1,113 +1,86 @@
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/VyrosxC-Hub/NewTest/main/los2.lua", true))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Marwanleprodu91670/muscle-legend-lite-hub-elerium-library-/refs/heads/main/library"))()
 local Window = Library:AddWindow("VyrosxC Hub", { MinSize = Vector2.new(600, 650) })
 
--- Adicionar Abas
-local statsTab = window:AddTab("Stats") -- Aba de Estatísticas
-statsTab:Show()
+-- Tab de Estatísticas
+local StatsTab = Window:AddTab("Stats")
 
-local autoRebirthTab = window:AddTab("Auto Rebirth") -- Aba de Rebirth Automático
-local autoRaceTab = window:AddTab("Auto Race") -- Aba de Corridas Automáticas
-local chatSpamTab = window:AddTab("Chat Spam") -- Aba de Spam de Chat
-local extraTab = window:AddTab("Extra") -- Aba de Extras
-local creditsTab = window:AddTab("Credits") -- Aba de Créditos
-
--- Função para Atualizar Estatísticas
-local function updateStats()
+StatsTab:AddButton("Atualizar Estatísticas", function()
     local player = game.Players.LocalPlayer
     local leaderstats = player:WaitForChild("leaderstats")
-    statsTab:AddLabel("Steps: " .. leaderstats.Steps.Value)
-    statsTab:AddLabel("Rebirths: " .. leaderstats.Rebirths.Value)
-    statsTab:AddLabel("Hoops: " .. leaderstats.Hoops.Value)
-    statsTab:AddLabel("Races: " .. leaderstats.Races.Value)
+    print("Steps: " .. leaderstats.Steps.Value)
+    print("Rebirths: " .. leaderstats.Rebirths.Value)
+    print("Hoops: " .. leaderstats.Hoops.Value)
+    print("Races: " .. leaderstats.Races.Value)
+end)
+
+-- Tab de Auto Rebirth
+local RebirthTab = Window:AddTab("Auto Rebirth")
+local autoRebirthEnabled = false
+local rebirthAmount = 0
+local currentRebirths = 0
+
+local function autoRebirth()
+    spawn(function()
+        while autoRebirthEnabled do
+            local rebirthEvent = game.ReplicatedStorage:FindFirstChild("rebirthRemote")
+            if rebirthEvent and (rebirthAmount == 0 or currentRebirths < rebirthAmount) then
+                rebirthEvent:FireServer()
+                currentRebirths = currentRebirths + 1
+            else
+                autoRebirthEnabled = false
+            end
+            wait(0.5)
+        end
+    end)
 end
-updateStats()
 
--- Auto Rebirth
-local rebirthFolder = autoRebirthTab:AddFolder("Rebirth Stopping Point")
-rebirthFolder:AddTextBox("Set Rebirth Goal", function(value)
-    local target = tonumber(value)
-    if target then
-        targetRebirth = target
-        print("Rebirth goal set to: " .. targetRebirth)
-    else
-        print("Invalid value!")
-    end
+RebirthTab:AddSwitch("Ativar Auto Rebirth", function(state)
+    autoRebirthEnabled = state
+    if state then autoRebirth() end
 end)
 
-rebirthFolder:AddSwitch("Enable Auto Rebirth", function(state)
-    getgenv().AutoRebirth = state
-    while AutoRebirth do
-        Rebirth()
-        wait(0.7)
-    end
+RebirthTab:AddTextBox("Definir Meta de Rebirths", function(value)
+    rebirthAmount = tonumber(value) or 0
+    currentRebirths = 0
+    print("Meta de Rebirth definida: " .. rebirthAmount)
 end)
 
--- Auto Race
-local raceFolder = autoRaceTab:AddFolder("Race Options")
-local raceDropdown = raceFolder:AddDropdown("Select Map", function(selected)
-    _G.SelectedTeleport = selected
-    print("Selected Map: " .. selected)
-end)
+-- Tab de Auto Farm
+local AutoFarmTab = Window:AddTab("Auto Farm")
 
-raceDropdown:Add("Main City")
-raceDropdown:Add("Space")
-raceDropdown:Add("Desert")
-
-raceFolder:AddSwitch("Enable Auto Race", function(state)
-    toggleAutoRaces(state)
-end)
-
--- Spam no Chat
-chatSpamTab:AddTextBox("Spam Message", function(value)
-    _G.Message = value
-end)
-
-chatSpamTab:AddTextBox("Interval (s)", function(value)
-    _G.Interval = tonumber(value) or 1
-end)
-
-chatSpamTab:AddSwitch("Enable Chat Spam", function(state)
-    _G.SendMessages = state
+AutoFarmTab:AddSwitch("Auto Weight", function(state)
     if state then
         spawn(function()
-            while _G.SendMessages do
-                if _G.Message and _G.Message ~= "" then
-                    sendChatMessage(_G.Message)
+            while state do
+                local tool = game.Players.LocalPlayer.Backpack:FindFirstChild("Weight")
+                if tool then
+                    game.Players.LocalPlayer.Character.Humanoid:EquipTool(tool)
+                    tool:Activate()
                 end
-                wait(_G.Interval)
+                wait(0.1)
             end
         end)
     end
 end)
 
--- Extras
-extraTab:AddSwitch("Enable No Clip", function(state)
-    toggleNoclip(state)
+-- Tab de Teleporte
+local TeleportTab = Window:AddTab("Teleport")
+
+TeleportTab:AddButton("Teleporte para o Beach", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-11, 5, -178)
 end)
 
-extraTab:AddTextBox("Set Gravity", function(value)
-    local gravity = tonumber(value)
-    if gravity then
-        workspace.Gravity = gravity
-    else
-        print("Invalid gravity value!")
-    end
+TeleportTab:AddButton("Teleporte para Muscle", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-8626, 15, -5730)
 end)
 
-extraTab:AddButton("Delete Barriers", function()
-    deleteBarrier()
-end)
-
--- Créditos
-creditsTab:AddLabel("VyrosxC Hub")
-creditsTab:AddLabel("Script Created By VyrosxC (@Alexg78909)")
-creditsTab:AddButton("Join Discord", function()
+-- Tab de Créditos
+local CreditsTab = Window:AddTab("Credits")
+CreditsTab:AddLabel("VyrosxC Hub by @Alexg78909")
+CreditsTab:AddButton("Copiar Discord", function()
     setclipboard("discord.gg/uydz6pZWMk")
-    print("Discord link copied!")
+    print("Link do Discord copiado para a área de transferência!")
 end)
 
-creditsTab:AddLabel("Collaborators:")
-creditsTab:AddLabel("Demonnic_Fast (@ericklopes16)")
-
--- Finalizar Inicialização
-library:Init()
+-- Inicialização
+Library:Init()
