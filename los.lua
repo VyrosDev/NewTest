@@ -1,18 +1,6 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Marwanleprodu91670/muscle-legend-lite-hub-elerium-library-/refs/heads/main/library"))()
 local Window = Library:AddWindow("VyrosxC Hub", { MinSize = Vector2.new(600, 650) })
 
--- Tab de Estatísticas
-local StatsTab = Window:AddTab("Stats")
-
-StatsTab:AddButton("Atualizar Estatísticas", function()
-    local player = game.Players.LocalPlayer
-    local leaderstats = player:WaitForChild("leaderstats")
-    print("Steps: " .. leaderstats.Steps.Value)
-    print("Rebirths: " .. leaderstats.Rebirths.Value)
-    print("Hoops: " .. leaderstats.Hoops.Value)
-    print("Races: " .. leaderstats.Races.Value)
-end)
-
 -- Tab de Auto Rebirth
 local RebirthTab = Window:AddTab("Auto Rebirth")
 local autoRebirthEnabled = false
