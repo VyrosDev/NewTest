@@ -25,25 +25,51 @@ local function ResetCharacter()
     print("The character has been reset to its original state!")
 end
 
+-- Function WalkSpeed e JumpPower --
+local function setPlayerStats(walkSpeed, jumpPower)
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    
+    -- Ajusta a velocidade
+    humanoid.WalkSpeed = walkSpeed
+    print("Speed ​​adjusted to: " .. walkSpeed)
+    
+    -- Ajusta o poder de pulo
+    humanoid.JumpPower = jumpPower
+    print("Jump power adjusted to: " .. jumpPower)
+end
+
 
 --// VyrosxC Hub UI \\--
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/VyrosxC-Hub/NewTest/main/los2.lua"))()
 
 -- Create a new window and set its title and theme
-local window = DrRayLibrary:Load("VyrosxC Hub | Legends Of Speed ⚡", "Default")
+local window = DrRayLibrary:Load("VyrosxC Hub", "Default")
 
 -- Create the first tab with an image ID
 local tab1 = DrRayLibrary.newTab("Main", "100789040568622")
 
--- Add elements to the first tab
+
+-- Section
 tab1.newLabel("Main")
-tab1.newButton("Expand Torso", "Max 2", function()
-    ExpandTorso()  -- Chama a função para expandir o torso
+
+tab1.newButton("Expand Torso", "BETA", function()
+    ExpandTorso() 
 end)
 
 -- Adicionando o botão "Reset Character"
-tab1.newButton("Reset Character", "Etc Etc", function()
+tab1.newButton("Reset Character", "Restart If Necessary", function()
     ResetCharacter()  -- Chama a função para resetar o personagem
+end)
+
+
+-- Section
+tab1.newLabel("Player Settings")
+
+tab1.newInput("Walk Speed", "Select Your Walk Speed.", function()
+    setPlayerStats(walkSpeed, jumpPower)     
+    print("Invalid value for WalkSpeed: " .. text)
 end)
 
 tab1.newToggle("Toggle", "Toggle! (prints the state)", true, function(toggleState)
@@ -52,9 +78,6 @@ tab1.newToggle("Toggle", "Toggle! (prints the state)", true, function(toggleStat
     else
         print("Off")
     end
-end)
-tab1.newInput("Input", "Prints your input.", function(text)
-    print("Entered text in Tab 1: " .. text)
 end)
 
 -- Create the second tab with a different image ID
