@@ -40,6 +40,15 @@ local function setPlayerStats(walkSpeed, jumpPower)
     print("Jump power adjusted to: " .. jumpPower)
 end
 
+-- Function Auto Race V2 --
+game:GetService('ReplicatedStorage').raceInProgress.Changed:Connect(function()
+    if AutoRaceToggle then  -- Verifica se o Auto Race está ativado
+        if game:GetService('ReplicatedStorage').raceInProgress.Value == true then
+            game:GetService('ReplicatedStorage').rEvents.raceEvent:FireServer("joinRace")  -- Envia o evento para o servidor para entrar na corrida
+        end
+    end
+end)
+
 
 --// VyrosxC Hub UI \\--
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/VyrosxC-Hub/NewTest/main/los2.lua"))()
@@ -68,7 +77,7 @@ end)
 tab1.newLabel("Player Settings")
 
 tab1.newInput("Walk Speed", "Select Your Walk Speed.", function()
-    setPlayerStats(walkSpeed, jumpPower)     
+    setPlayerStats()     
     print("Invalid value for WalkSpeed: " .. text)
 end)
 
@@ -88,8 +97,8 @@ tab2.newLabel("Hello, this is Tab 2.")
 tab2.newButton("Button", "Prints Hello!", function()
     print('Hello!')
 end)
-tab2.newToggle("Toggle", "Toggle! (prints the state)", true, function(toggleState)
-    if toggleState then
+tab2.newToggle("Auto Race V2", "The Best Auto Race 💀", true, function(Value)
+    if AutoRaceToggle then
         print("On")
     else
         print("Off")
