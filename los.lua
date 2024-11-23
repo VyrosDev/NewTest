@@ -1,11 +1,5 @@
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/VyrosxC-Hub/NewTest/main/los2.lua", true))()
-
--- Criar a Janela Principal
-local window = library:AddWindow("VyrosxC Hub", {
-    main_color = Color3.fromRGB(41, 74, 122),
-    min_size = Vector2.new(250, 346),
-    can_resize = false,
-})
+local Window = Library:AddWindow("VyrosxC Hub", { MinSize = Vector2.new(600, 650) })
 
 -- Adicionar Abas
 local statsTab = window:AddTab("Stats") -- Aba de Estatísticas
