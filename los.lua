@@ -97,13 +97,15 @@ tab2.newLabel("Hello, this is Tab 2.")
 tab2.newButton("Button", "Prints Hello!", function()
     print('Hello!')
 end)
-tab2.newToggle("Auto Race V2", "The Best Auto Race 💀", true, function(Value)
-    if AutoRaceToggle then
-        print("On")
-    else
-        print("Off")
+tab2.newToggle("Auto Race V2", "Auto Race V2", true, function()
+game:GetService('ReplicatedStorage').raceInProgress.Changed:Connect(function()
+    if AutoRaceToggle then  -- Verifica se o Auto Race está ativado
+        if game:GetService('ReplicatedStorage').raceInProgress.Value == true then
+            game:GetService('ReplicatedStorage').rEvents.raceEvent:FireServer("joinRace")  -- Envia o evento para o servidor para entrar na corrida
+        end
     end
 end)
+
 tab2.newDropdown("Dropdown", "Select one of these options!", {"water", "dog", "air", "bb", "airplane", "wohhho", "yeay", "delete"}, function(selectedOption)
     print(selectedOption)
 end)
