@@ -3,19 +3,30 @@ local Window = Library:AddWindow("VyrosxC Hub | Legends Of Speed ⚡", { MinSize
  
 local MainTab = Window:AddTab("Main")
 
-MainTab:AddDropdown("select", function(text)
-	if text == "Mars" then  -- Code
-		print("o")
-	elseif text == "Earth" then
-	print("k")
-	elseif text == "Iridocyclitis" then
-	print("Weeeee")
-	end
+-- Adicionando um Dropdown à MainTab
+MainTab:AddDropdown("Selecionar Cidade", function(text)
+    if text == "Main City" then
+        -- Código para teleportar para Main City
+        print("Teleportando para a Main City...")
+        -- Exemplo de teleport para a Main City (ajuste de coordenadas conforme necessário)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 10, 0)
+    elseif text == "Snow City" then
+        -- Código para teleportar para Snow City
+        print("Teleportando para a Snow City...")
+        -- Exemplo de teleport para a Snow City (ajuste de coordenadas conforme necessário)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(100, 10, 100)
+    elseif text == "Magma City" then
+        -- Código para teleportar para Magma City
+        print("Teleportando para a Magma City...")
+        -- Exemplo de teleport para a Magma City (ajuste de coordenadas conforme necessário)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(200, 10, 200)
+    end
 end)
-local mars = dropdown:Add("Mars")  -- Options 
-local earth = dropdown:Add("Earth")
-local not_a_planet = dropdown:Add("Iridocyclitis")
-end
+
+-- Adicionando opções ao Dropdown
+dropdown:Add("Main City")
+dropdown:Add("Snow City")
+dropdown:Add("Magma City")
 
 -- Tab de Auto Rebirth
 local RebirthTab = Window:AddTab("Auto Rebirth")
