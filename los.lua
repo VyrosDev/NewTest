@@ -3,7 +3,7 @@ local Window = Library:AddWindow("VyrosxC Hub | Legends Of Speed ⚡", { MinSize
  
 local MainTab = Window:AddTab("Main")
 
-local dropdown = features:AddDropdown("select", function(text)
+MainTab:AddDropdown("select", function(text)
 	if text == "Mars" then  -- Code
 		print("o")
 	elseif text == "Earth" then
