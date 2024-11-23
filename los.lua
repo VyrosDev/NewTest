@@ -41,13 +41,17 @@ local function setPlayerStats(walkSpeed, jumpPower)
 end
 
 -- Function Auto Race V2 --
-game:GetService('ReplicatedStorage').raceInProgress.Changed:Connect(function()
-    if AutoRaceToggle then  -- Verifica se o Auto Race está ativado
-        if game:GetService('ReplicatedStorage').raceInProgress.Value == true then
-            game:GetService('ReplicatedStorage').rEvents.raceEvent:FireServer("joinRace")  -- Envia o evento para o servidor para entrar na corrida
-        end
+local AutoRaceToggle = false  -- Estado inicial do Auto Race
+
+-- Função para ativar/desativar Auto Race
+local function toggleAutoRace(state)
+    AutoRaceToggle = state
+    if AutoRaceToggle then
+        print("Auto Race ativado")
+    else
+        print("Auto Race desativado")
     end
-end)
+end
 
 
 --// VyrosxC Hub UI \\--
@@ -81,12 +85,8 @@ tab1.newInput("Walk Speed", "Select Your Walk Speed.", function()
     print("Invalid value for WalkSpeed: " .. text)
 end)
 
-tab1.newToggle("Toggle", "Toggle! (prints the state)", true, function(toggleState)
-    if toggleState then
-        print("On")
-    else
-        print("Off")
-    end
+tab1.newToggle("Auto Race V2", "The Best Auto Race 💀", true, function(Value)
+    toggleAutoRace(Value)  -- Controla o estado do Auto Race
 end)
 
 -- Create the second tab with a different image ID
@@ -97,13 +97,7 @@ tab2.newLabel("Hello, this is Tab 2.")
 tab2.newButton("Button", "Prints Hello!", function()
     print('Hello!')
 end)
-tab2.newToggle("Auto Race V2", "Auto Race V2", true, function()
-    if AutoRaceToggle then  -- Verifica se o Auto Race está ativado
-        if game:GetService('ReplicatedStorage').raceInProgress.Value == true then
-            game:GetService('ReplicatedStorage').rEvents.raceEvent:FireServer("joinRace")  -- Envia o evento para o servidor para entrar na corrida
-        end
-    end
-end)
+
 
 tab2.newDropdown("Dropdown", "Select one of these options!", {"water", "dog", "air", "bb", "airplane", "wohhho", "yeay", "delete"}, function(selectedOption)
     print(selectedOption)
