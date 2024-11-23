@@ -3,6 +3,20 @@ local Window = Library:AddWindow("VyrosxC Hub | Legends Of Speed ⚡", { MinSize
  
 local MainTab = Window:AddTab("Main")
 
+local dropdown = features:AddDropdown("select", function(text)
+	if text == "Mars" then  -- Code
+		print("o")
+	elseif text == "Earth" then
+	print("k")
+	elseif text == "Iridocyclitis" then
+	print("Weeeee")
+	end
+end)
+local mars = dropdown:Add("Mars")  -- Options 
+local earth = dropdown:Add("Earth")
+local not_a_planet = dropdown:Add("Iridocyclitis")
+end
+
 -- Tab de Auto Rebirth
 local RebirthTab = Window:AddTab("Auto Rebirth")
 local autoRebirthEnabled = false
