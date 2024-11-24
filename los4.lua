@@ -268,6 +268,17 @@ end
 
 
 
+-- Function No Ping --
+local function StabilizePing()
+    while noPingEnabled do
+
+        pingCheckEvent:FireServer("pingCheck")
+        wait()  
+    end
+end
+
+
+
 --// VyrosxC Hub \\--
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/VyrosxC-Hub/NewTest/main/los2.lua"))()
 
@@ -446,6 +457,16 @@ tab3.newToggle("Auto Farm", "Toggle", false, function(toggleState)
     end
 end)
 
+tab3.newToggle("No Ping", "Toggle", false, function(toggleState)
+    noPingEnabled = toggleState
+    if noPingEnabled then
+        print("No Ping Enabled!")
+        StabilizePing()
+    else
+        print("Bo Ping Disabled!")
+    end
+end)
+
 
 
 -- Section
@@ -454,19 +475,19 @@ tab3.newLabel("Hoops Farm")
 tab3.newToggle("Hoops V1", "Toggle", false, function(toggleState)
     isFarmingV1 = toggleState
     if isFarmingV1 then
-        print("Hoop Farm V1 Enabled!")
+        print("Hoops Farm V1 Enabled!")
         StartFarmingV1()  
     else
-        print("Hoop Farm V1 Disabled!")
+        print("Hoops Farm V1 Disabled!")
     end
 end)
 
 tab3.newToggle("Hoops V2", "Toggle", false, function(toggleState)
     isFarmingV2 = toggleState
     if isFarmingV2 then
-        print("Hoop Farm V2 Enabled!")
+        print("Hoops Farm V2 Enabled!")
         StartFarmingV2() 
     else
-        print("Hoop Farm V2 Disabled!")
+        print("Hoops Farm V2 Disabled!")
     end
 end)
