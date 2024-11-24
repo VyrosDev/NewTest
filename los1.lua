@@ -223,6 +223,65 @@ end
 
 
 
+-- Function No Ping --
+local noPingEnabled = false
+local pingCheckEvent = game:GetService("ReplicatedStorage").rEvents.someEvent 
+
+local function StabilizePing()
+    while noPingEnabled do
+ 
+        pingCheckEvent:FireServer("pingCheck")
+        wait(0.3)  
+    end
+end
+
+
+
+-- Function Auto Hoops --
+local isFarmingV1 = false
+local isFarmingV2 = false
+
+local function HoopFarmV1()
+    local Chr = game.Players.LocalPlayer.Character
+    if Chr and Chr.Parent and Chr:FindFirstChild("Head") then
+        for i, v in next, game:GetService("Workspace").Hoops:GetDescendants() do
+            if v.Name == "TouchInterest" and v.Parent then
+                firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 0)
+                task.wait()
+                firetouchinterest(Chr:WaitForChild("Head", 5), v.Parent, 1)
+            end
+        end
+    end
+end
+
+local function HoopFarmV2()
+    local Chr = game.Players.LocalPlayer.Character
+    if Chr and Chr.Parent and Chr:FindFirstChild("HumanoidRootPart") then
+        local children = workspace.Hoops:GetChildren()
+        for i, child in ipairs(children) do
+            if child.Name == "Hoop" then
+                child.CFrame = Chr.HumanoidRootPart.CFrame
+            end    
+        end
+    end
+end
+
+local function StartFarmingV1()
+    while isFarmingV1 do
+        HoopFarmV1()
+        wait() 
+    end
+end
+
+local function StartFarmingV2()
+    while isFarmingV2 do
+        HoopFarmV2()
+        wait()  
+    end
+end
+
+
+
 --// VyrosxC Hub \\--
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/VyrosxC-Hub/NewTest/main/los2.lua"))()
 
@@ -230,8 +289,6 @@ local window = DrRayLibrary:Load("VyrosxC Hub", "Default")
 
 -- Tab1
 local tab1 = DrRayLibrary.newTab("Main", "rbxassetid://100789040568622")
-
-
 
 -- Section
 tab1.newLabel("Main")
@@ -291,7 +348,7 @@ end)
 -- Section
 tab1.newLabel("Game Options")
 
-tab1.newButton("Anti-Kick", "Button", function()
+tab1.newButton("Anti Kick", "Button", function()
     AntiKick()  -- Activates the Anti-Kick function
     print("Anti-Kick activated!")
 end)
@@ -327,7 +384,7 @@ end)
 
 
 -- Tab2
-local tab2 = DrRayLibrary.newTab("Teleports", "ImageIdLogoHere")
+local tab2 = DrRayLibrary.newTab("Teleports", "rbxassetid://103168823763561")
 
 -- Section 
 tab2.newLabel("City Teleports")
@@ -374,47 +431,69 @@ end)
 
 
 -- Tab3
-local tab3 = DrRayLibrary.newTab("Auto Farm", "ImageIdLogoHere")
+local tab3 = DrRayLibrary.newTab("Auto Farm", "rbxassetid://78744214847458")
 
 -- Section 
-tab2.newLabel("Auto Farm")
+tab3.newLabel("Auto Farm")
 
 tab3.newDropdown("Select City", "City", {"None", "City", "Magma City"}, function(selectedLocation)
     SetLocation(selectedLocation)
     print("Selected Location: " .. selectedLocation)
 end)
 
--- Dropdown to Select Orb
 tab3.newDropdown("Select Orb", "Orb", {"None", "Red Orb", "Yellow Orb"}, function(selectedOrb)
     SetOrb(selectedOrb)
     print("Selected Orb: " .. selectedOrb)
 end)
 
--- Dropdown to Select Collection Speed
 tab3.newDropdown("Select Speed", "Speed", {"None", "x50", "x75", "x100", "x150", "x175", "x200", "x250", "x275", "x300"}, function(selectedSpeed)
     SetCollectionSpeed(selectedSpeed)
     print("Selected Collection Speed: " .. selectedSpeed)
 end)
 
--- Toggle for Auto Farm
 tab3.newToggle("Auto Farm", "Toggle", false, function(toggleState) 
     isCollecting = toggleState
     print("Auto Farm Status: " .. (isCollecting and "Enabled" or "Disabled"))
 
     while isCollecting do
         CollectOrbs()
-        wait(0.3) 
+        wait() 
     end
 end)
 
--- OPTIONAL: Set theme after all elements are loaded
-task.wait(0) -- Slight delay to ensure UI is initialized
-local mainColor = Color3.fromRGB(0, 0, 0)       -- Black (Main Color)
-local secondColor = Color3.fromRGB(255, 0, 0)   -- Red (Secondary Color)
+tab3.newToggle("No Ping", "Toggle", false, function(toggleState)
+    noPingEnabled = toggleState
+    if noPingEnabled then
+        print("No Ping ativado. Tentando estabilizar a conexão.")
+        StabilizePing()  -- Chama a função de estabilização do ping quando o toggle for ativado
+    else
+        print("No Ping desativado. Parando a estabilização.")
+    end
+end)
 
--- Safeguard: Ensure `SetTheme` exists
-if window.SetTheme then
-    window:SetTheme(mainColor, secondColor)
-else
-    print("Warning: SetTheme function not found in this library version.")
-end
+
+
+-- Section
+tab3.newLabel("Hoops Farm")
+
+tab3.newToggle("Hoops V1", "Toggle", false, function(toggleState)
+    isFarmingV1 = toggleState
+    if isFarmingV1 then
+        print("Hoop Farm V1 Enabled!")
+        StartFarmingV1()  
+    else
+        print("Hoop Farm V1 Disabled!")
+    end
+end)
+
+tab3.newToggle("Hoops V2", "Toggle", false, function(toggleState)
+    isFarmingV2 = toggleState
+    if isFarmingV2 then
+        print("Hoop Farm V2 Enabled!")
+        StartFarmingV2() 
+    else
+        print("Hoop Farm V2 Disabled!")
+    end
+end)
+
+
