@@ -77,7 +77,20 @@ game:GetService('ReplicatedStorage').raceStarted.Changed:Connect(function()
 end)
 
 
---// VyrosxC Hub UI \\--
+
+
+
+-- Function Hip Height
+local function setHipHeight(value)
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    humanoid.HipHeight = value  -- Define a altura do quadril (HipHeight)
+end
+
+
+
+--// VyrosxC Hub \\--
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/VyrosxC-Hub/NewTest/main/los2.lua"))()
 
 -- Create a new window and set its title and theme
@@ -90,7 +103,7 @@ local tab1 = DrRayLibrary.newTab("Main", "100789040568622")
 -- Section
 tab1.newLabel("Main")
 
-tab1.newButton("Expand Torso", "BETA", function()
+tab1.newButton("Expand Torso", "Beta", function()
     ExpandTorso() 
 end)
 
@@ -103,17 +116,22 @@ end)
 -- Section
 tab1.newLabel("Player Settings")
 
-tab1.newInput("Walk Speed", "Select Your Walk Speed.", function()
-    setPlayerStats()     
-    print("Invalid value for WalkSpeed: " .. text)
+tab.newInput("Alterar HipHeight", "Digite um valor para o HipHeight.", function(value)
+    local numericValue = tonumber(value)  -- Tenta converter o valor digitado para número
+    if numericValue then
+        setHipHeight(numericValue)  -- Chama a função setHipHeight para alterar a altura
+        print("Novo valor para HipHeight: " .. numericValue)
+    else
+        print("Valor inválido! Por favor, insira um número.")
+    end
 end)
 
-tab1.newToggle("Auto Race V2", "Best Auto Race 💀", true, function(Value)
+tab1.newToggle("Auto Race V2", "Best Auto Race 💀", false, function(Value)
     ToggleAutoRace(Value)  -- Ativa ou desativa o Auto Race com base no valor do toggle
     if AutoRaceToggle then
-        print("Auto Race started!")
+        print("Auto Race V2 Enabled")
     else
-        print("Auto Race stopped!")
+        print("Auto Race V2 Disabled!")
     end
 end)
 
