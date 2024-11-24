@@ -684,10 +684,3 @@ tab5.newToggle("Auto Fill Race", "Toggle", false, function(value)
         end)
     end
 end)
-
-local window2 = DrRayLibrary2:Load("VyroxC Hub 2", "ImageIdHere")
--- Tab1
-local tab1 = DrRayLibrary2.newTab("Main", "rbxassetid://100789040568622")
-
--- Section
-tab1.newLabel("Main 2")
