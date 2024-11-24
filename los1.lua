@@ -226,11 +226,13 @@ end
 --// VyrosxC Hub \\--
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/VyrosxC-Hub/NewTest/main/los2.lua"))()
 
-local window = DrRayLibrary:Load("VyrosxC Hub", "Default")
+local window = DrRayLibrary:Load("VyrosxC", "Default")
 
--- Customize the theme colors
-local mainColor = Color3.fromRGB(0, 0, 0)       
-local secondColor = Color3.fromRGB(255, 0, 0)   
+local tab = window.newTab("Features Tab", "ImageIdHere")
+
+-- Customize the theme colors (Main and Secondary)
+local mainColor = Color3.fromRGB(0, 0, 0)       -- Black (Main Color)
+local secondColor = Color3.fromRGB(255, 0, 0)   -- Red (Secondary Color)
 window:SetTheme(mainColor, secondColor)
 
 
