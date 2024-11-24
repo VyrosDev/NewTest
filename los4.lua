@@ -279,6 +279,48 @@ end
 
 
 
+-- Function Auto Rebirth Stopping Point
+local targetRebirth = 99999  
+local currentRebirths = 0  
+
+local function Rebirth()
+    task.wait(0.7)
+    local ohString1 = "rebirthRequest"
+    game:GetService("ReplicatedStorage").rEvents.rebirthEvent:FireServer(ohString1)
+end
+
+local function getCurrentRebirths()
+
+    return game.Players.LocalPlayer:WaitForChild("leaderstats"):WaitForChild("Rebirths").Value
+end
+
+local function autoRebirthStoppingPoint()
+    while true do
+    
+        currentRebirths = getCurrentRebirths()
+
+        if currentRebirths >= targetRebirth then
+            print("Rebirth target reached: " .. currentRebirths)
+            break  
+        end
+  
+        Rebirth()
+
+        task.wait(0.7) 
+    end
+end
+
+local function autoRebirth()
+    while true do
+   
+        Rebirth()
+ 
+        task.wait(0.7)  
+    end
+end
+
+
+
 --// VyrosxC Hub \\--
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/VyrosxC-Hub/NewTest/main/los2.lua"))()
 
@@ -489,5 +531,47 @@ tab3.newToggle("Hoops V2", "Toggle", false, function(toggleState)
         StartFarmingV2() 
     else
         print("Hoops Farm V2 Disabled!")
+    end
+end)
+
+
+
+-- Tab4
+local tab4 = DrRayLibrary.newTab("Auto Rebirth", "rbxassetid://124658295933505")
+
+-- Section 
+tab3.newLabel("Rebirth Stopping Point")
+
+tab4.newInput("Rebirth", "Enter Desired Rebirth", function(value)
+    local newTarget = tonumber(value)
+    if newTarget then
+        targetRebirth = newTarget
+        print("Target rebirth set to: " .. targetRebirth)
+    else
+        print("Invalid input! Please enter a valid number.")
+    end
+end)
+
+-- Toggle para Rebirth Stopping Point
+tab4.newToggle("Auto Rebirth Stopping Point", "Toggle", false, function(toggleState) 
+    if toggleState then
+        print("Auto Rebirth (Stopping Point) Enabled!")
+        autoRebirthStoppingPoint()
+    else
+        print("Auto Rebirth (Stopping Point) Disabled!")
+    end
+end)
+
+
+
+-- Section 
+tab3.newLabel("Auto Rebirth")
+
+tab4.newToggle("Auto Rebirth", "Toggle", false, function(toggleState) 
+    if toggleState then
+        print("Auto Rebirth Enabled!")
+        autoRebirth()
+    else
+        print("Auto Rebirth Disabled!")
     end
 end)
