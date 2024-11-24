@@ -116,7 +116,7 @@ end)
 -- Section
 tab1.newLabel("Player Settings")
 
-tab.newInput("Alterar HipHeight", "Digite um valor para o HipHeight.", function(value)
+tab1.newInput("Alterar HipHeight", "Digite um valor para o HipHeight.", function(value)
     local numericValue = tonumber(value)  -- Tenta converter o valor digitado para número
     if numericValue then
         setHipHeight(numericValue)  -- Chama a função setHipHeight para alterar a altura
