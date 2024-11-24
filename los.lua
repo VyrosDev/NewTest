@@ -80,7 +80,7 @@ end)
 
 
 
--- Function Hip Height
+-- Function Hip Height --
 local function setHipHeight(value)
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
@@ -88,16 +88,30 @@ local function setHipHeight(value)
     humanoid.HipHeight = value  -- Define a altura do quadril (HipHeight)
 end
 
+-- Function WalkSpeed and JumpPower
+local function setPlayerStats(walkSpeed, jumpPower)
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    
+    -- Ajusta a velocidade de caminhada
+    humanoid.WalkSpeed = walkSpeed
+    print("Speed ​​adjusted to: " .. walkSpeed)
+    
+    -- Ajusta o poder de pulo
+    humanoid.JumpPower = jumpPower
+    print("Jump power adjusted to: " .. jumpPower)
+end
+
 
 
 --// VyrosxC Hub \\--
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/VyrosxC-Hub/NewTest/main/los2.lua"))()
 
--- Create a new window and set its title and theme
 local window = DrRayLibrary:Load("VyrosxC Hub", "Default")
 
--- Create the first tab with an image ID
 local tab1 = DrRayLibrary.newTab("Main", "100789040568622")
+
 
 
 -- Section
@@ -108,21 +122,48 @@ tab1.newButton("Expand Torso", "Beta", function()
 end)
 
 -- Adicionando o botão "Reset Character"
-tab1.newButton("Reset Character", "Restart If Necessary", function()
+tab1.newButton("Reset Character", "Emergency", function()
     ResetCharacter()  -- Chama a função para resetar o personagem
 end)
+
 
 
 -- Section
 tab1.newLabel("Player Settings")
 
-tab1.newInput("Alterar HipHeight", "Digite um valor para o HipHeight.", function(value)
+tab.newInput("Walk Speed", "Enter a Value For Walk Speed", function(value)
+    local numericValue = tonumber(value) 
+    if numericValue then
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoid = character:WaitForChild("Humanoid")
+        humanoid.WalkSpeed = numericValue  
+        print("New value for WalkSpeed: " .. numericValue)
+    else
+        print("Invalid value! Please enter a valid number for WalkSpeed.")
+    end
+end)
+
+tab1.newInput("Jump Power", "Enter a Value For Jump Power.", function(value)
+    local numericValue = tonumber(value) 
+    if numericValue then
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoid = character:WaitForChild("Humanoid")
+        humanoid.JumpPower = numericValue 
+        print("Novo valor para JumpPower: " .. numericValue)
+    else
+        print("Invalid value! Please enter a valid number for JumpPower.")
+    end
+end)
+
+tab1.newInput("Hip Height", "Default Value '2.5'", function(value)
     local numericValue = tonumber(value)  -- Tenta converter o valor digitado para número
     if numericValue then
         setHipHeight(numericValue)  -- Chama a função setHipHeight para alterar a altura
-        print("Novo valor para HipHeight: " .. numericValue)
+        print("New value for HipHeight: " .. numericValue)
     else
-        print("Valor inválido! Por favor, insira um número.")
+        print("Invalid value! Please enter a number.")
     end
 end)
 
