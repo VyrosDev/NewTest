@@ -40,46 +40,31 @@ local function setPlayerStats(walkSpeed, jumpPower)
     print("Jump power adjusted to: " .. jumpPower)
 end
 
--- Definir o Toggle de Auto Race
-local AutoRaceToggle = false  -- A variável que controla o estado do toggle
-
 -- Função Auto Race V2 --
+local AutoRaceToggle = false  -- Variável para controlar o estado do toggle (ativado/desativado)
+local Player = game.Players.LocalPlayer  -- Definindo a variável Player corretamente
+
+-- Conectar à mudança da variável 'raceInProgress'
 game:GetService('ReplicatedStorage').raceInProgress.Changed:Connect(function()
     if AutoRaceToggle then  -- Verifica se o Auto Race está ativado
         if game:GetService('ReplicatedStorage').raceInProgress.Value == true then
             game:GetService('ReplicatedStorage').rEvents.raceEvent:FireServer("joinRace")  -- Envia o evento para o servidor para entrar na corrida
-            print("Joined the race!")
         end
     end
 end)
 
+-- Conectar à mudança da variável 'raceStarted'
 game:GetService('ReplicatedStorage').raceStarted.Changed:Connect(function()
     if AutoRaceToggle then  -- Verifica se o Auto Race está ativado
         if game:GetService('ReplicatedStorage').raceStarted.Value == true then
             -- Teleporta o jogador para a posição de corrida quando a corrida começar
             for i, v in pairs(game:GetService('Workspace').raceMaps:GetChildren()) do
-                local OldFinishPosition = v.finishPart.CFrame
-                v.finishPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                wait(1)
-                v.finishPart.CFrame = OldFinishPosition
-            end
-            print("Race started, ready to race!")
-        end
-    end
-end)
-
-game:GetService('ReplicatedStorage').raceEnded.Changed:Connect(function()
-    if AutoRaceToggle then  -- Verifica se o Auto Race está ativado
-        if game:GetService('ReplicatedStorage').raceEnded.Value == true then
-            -- Verifica se o jogador ganhou a corrida
-            local player = Players.LocalPlayer
-            if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                -- Aqui podemos definir uma condição para determinar se o jogador venceu
-                -- Exemplo simples de verificação, dependendo da estrutura do jogo
-                if player.Character.HumanoidRootPart.Position == game:GetService("Workspace").raceMaps.finishPart.Position then
-                    print("You won the race!")
-                else
-                    print("You lost the race!")
+                -- Verificar se a parte de final de corrida (finishPart) existe
+                if v:FindFirstChild("finishPart") then
+                    local OldFinishPosition = v.finishPart.CFrame
+                    v.finishPart.CFrame = Player.Character.HumanoidRootPart.CFrame  -- Teleporta o jogador para o local da linha de chegada
+                    wait(1)  -- Espera para garantir que o teleporte ocorreu corretamente
+                    v.finishPart.CFrame = OldFinishPosition  -- Restaura a posição original da linha de chegada
                 end
             end
         end
@@ -91,6 +76,25 @@ local function ToggleAutoRace(state)
     AutoRaceToggle = state
     print("Auto Race Toggle: " .. (AutoRaceToggle and "Enabled" or "Disabled"))
 end
+
+
+-- Conectar à mudança da variável 'raceStarted'
+game:GetService('ReplicatedStorage').raceStarted.Changed:Connect(function()
+    if AutoRaceToggle then  -- Verifica se o Auto Race está ativado
+        if game:GetService('ReplicatedStorage').raceStarted.Value == true then
+            -- Teleporta o jogador para a posição de corrida quando a corrida começar
+            for i, v in pairs(game:GetService('Workspace').raceMaps:GetChildren()) do
+                -- Verificar se a parte de final de corrida (finishPart) existe
+                if v:FindFirstChild("finishPart") then
+                    local OldFinishPosition = v.finishPart.CFrame
+                    v.finishPart.CFrame = Player.Character.HumanoidRootPart.CFrame  -- Teleporta o jogador para o local da linha de chegada
+                    wait(1)  -- Espera para garantir que o teleporte ocorreu corretamente
+                    v.finishPart.CFrame = OldFinishPosition  -- Restaura a posição original da linha de chegada
+                end
+            end
+        end
+    end
+end)
 
 
 --// VyrosxC Hub UI \\--
@@ -125,11 +129,11 @@ tab1.newInput("Walk Speed", "Select Your Walk Speed.", function()
 end)
 
 tab1.newToggle("Auto Race V2", "The Best Auto Race 💀", true, function(Value)
-    ToggleAutoRace(Value)
+    ToggleAutoRace(Value)  -- Ativa ou desativa o Auto Race com base no valor do toggle
     if AutoRaceToggle then
-        print("Auto Race Started!")
+        print("Auto Race started!")
     else
-        print("Auto Race Stopped!")
+        print("Auto Race stopped!")
     end
 end)
 
