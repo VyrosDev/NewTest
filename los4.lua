@@ -410,16 +410,6 @@ tab1.newButton("Re-join The Game", "Button", function()
 end)
 
 
-tab1.newToggle("Auto Race V2", "Best Auto Race 💀", false, function(Value)
-    ToggleAutoRace(Value)  -- Ativa ou desativa o Auto Race com base no valor do toggle
-    if AutoRaceToggle then
-        print("Auto Race V2 Enabled")
-    else
-        print("Auto Race V2 Disabled!")
-    end
-end)
-
-
 
 -- Tab2
 local tab2 = DrRayLibrary.newTab("Teleports", "rbxassetid://103168823763561")
@@ -540,7 +530,7 @@ end)
 local tab4 = DrRayLibrary.newTab("Auto Rebirth", "rbxassetid://124658295933505")
 
 -- Section 
-tab3.newLabel("Rebirth Stopping Point")
+tab4.newLabel("Rebirth Stopping Point")
 
 tab4.newInput("Rebirth", "Enter Desired Rebirth", function(value)
     local newTarget = tonumber(value)
@@ -565,7 +555,7 @@ end)
 
 
 -- Section 
-tab3.newLabel("Auto Rebirth")
+tab4.newLabel("Auto Rebirth")
 
 tab4.newToggle("Auto Rebirth", "Toggle", false, function(toggleState) 
     if toggleState then
@@ -573,5 +563,49 @@ tab4.newToggle("Auto Rebirth", "Toggle", false, function(toggleState)
         autoRebirth()
     else
         print("Auto Rebirth Disabled!")
+    end
+end)
+
+
+
+-- Tab6
+local tab5 = DrRayLibrary.newTab("Auto Race", "rbxassetid://97860628277392")
+
+-- Section 
+tab5.newLabel("Auto Race")
+
+tab5.newDropdown("Select Map", "Select one of these options!", {"None", "Main City", "Space", "Desert"}, function(selectedOption) 
+    _G.SelectedTeleport = selectedOption
+    print("Selected Teleport: " .. selectedOption)
+end)
+
+tab5.newToggle("Auto Race V1", "Toggle", false, function(toggleState)
+    toggleAutoRaces(toggleState)
+end)
+
+tab5.newToggle("Auto Race V2", "Best Auto Race 💀", false, function(Value)
+    ToggleAutoRace(Value) 
+    if AutoRaceToggle then
+        print("Auto Race V2 Enabled!")
+    else
+        print("Auto Race V2 Disabled!")
+    end
+end)
+
+
+
+-- Section 
+tab5.newLabel("Extremely Fast Races")
+
+tab5.newToggle("Auto Fill Race", "Toggle", false, function(value)
+    autoFillRaceActive = value
+    
+    if autoFillRaceActive then
+        spawn(function()
+            while autoFillRaceActive do
+                game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace", true)
+                wait()
+            end
+        end)
     end
 end)
