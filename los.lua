@@ -130,24 +130,39 @@ end
 
 
 
+-- Function City Teleports --
+local function SelectCity(city)
+    if city == "Main City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9686.27148, 58.9799881, 3110.75903, -0.993164003, 2.12365538e-08, -0.116727315, 2.63954707e-08, 1, -4.26504876e-08, 0.116727315, -4.54400002e-08, -0.993164003)
+    elseif city == "Snow City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9672.77832, 58.9799881, 3768.75171, 0.991323948, -1.89020124e-08, -0.131441399, 1.31006459e-08, 1, -4.50012685e-08, 0.131441399, 4.28888676e-08, 0.991323948)
+    elseif city == "Magma City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-11051.4258, 216.940002, 4886.27832, 0.987576485, 3.03587235e-08, -0.157139242, -3.89276664e-08, 1, -5.14532452e-08, 0.157139242, 5.69310785e-08, 0.987576485)
+    elseif city == "Legends Highway" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-13095.9746, 214.580338, 5895.57568, 0.999146283, 0.0376458429, -0.0170128513, -0.037201196, 0.99897629, 0.0257374309, 0.0179643426, -0.0250825603, 0.999523938)
+    end
+end
+
+
 --// VyrosxC Hub \\--
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/VyrosxC-Hub/NewTest/main/los2.lua"))()
 
 local window = DrRayLibrary:Load("VyrosxC Hub", "Default")
 
+
+
+-- Tab1
 local tab1 = DrRayLibrary.newTab("Main", "100789040568622")
-
-
 
 -- Section
 tab1.newLabel("Main")
 
-tab1.newButton("Expand Torso", "Beta", function()
+tab1.newButton("Expand Torso", "Button", function()
     ExpandTorso() 
 end)
 
 -- Adicionando o botão "Reset Character"
-tab1.newButton("Reset Character", "Emergency", function()
+tab1.newButton("Reset Character", "Button", function()
     ResetCharacter()  -- Chama a função para resetar o personagem
 end)
 
@@ -197,12 +212,12 @@ end)
 -- Section
 tab1.newLabel("Game Options")
 
-tab1.newButton("Anti-Kick", "Anti 20 Min Bot", function()
+tab1.newButton("Anti-Kick", "Button", function()
     AntiKick()  -- Activates the Anti-Kick function
     print("Anti-Kick activated!")
 end)
 
-tab1.newButton("Low Graphics", "FPS + Ping", function()
+tab1.newButton("Low Graphics", "Button", function()
     optimizeFpsPing()  -- Activates the Low Graphics function
     print("Graphics settings optimized!")
 end)
@@ -212,12 +227,12 @@ end)
 -- Section
 tab1.newLabel("Emergency")
 
-tab1.newButton("Re-join The Game", "Re-Join", function()
-    -- Teleports the player back to the same game instance
+tab1.newButton("Re-join The Game", "Button", function()
+    
     local teleportService = game:GetService("TeleportService")
     local player = game:GetService("Players").LocalPlayer
-    teleportService:Teleport(game.PlaceId, player)  -- Teleports to the current PlaceId
-    print("Trying to get into the game...")  -- Confirms that the action was triggered
+    teleportService:Teleport(game.PlaceId, player)  
+    print("Trying to get into the game...")  
 end)
 
 
@@ -230,16 +245,16 @@ tab1.newToggle("Auto Race V2", "Best Auto Race 💀", false, function(Value)
     end
 end)
 
--- Create the second tab with a different image ID
-local tab2 = DrRayLibrary.newTab("Tab 2", "ImageIdLogoHere")
-
--- Add elements to the second tab
-tab2.newLabel("Hello, this is Tab 2.")
-tab2.newButton("Button", "Prints Hello!", function()
-    print('Hello!')
-end)
 
 
-tab2.newDropdown("Dropdown", "Select one of these options!", {"water", "dog", "air", "bb", "airplane", "wohhho", "yeay", "delete"}, function(selectedOption)
-    print(selectedOption)
+-- Tab2
+local tab2 = DrRayLibrary.newTab("Teleports", "ImageIdLogoHere")
+
+-- Section 
+tab2.newLabel("City Teleports")
+
+tab2.newDropdown("Select City", "Teleports", {"Main City", "Snow City", "Magma City", "Legends Highway"}, function(selectedCity)
+    -- Call the SelectCity function with the selected city
+    SelectCity(selectedCity)
+    print("Selected City: " .. selectedCity)
 end)
