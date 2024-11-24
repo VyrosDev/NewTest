@@ -40,23 +40,15 @@ local function setPlayerStats(walkSpeed, jumpPower)
     print("Jump power adjusted to: " .. jumpPower)
 end
 
--- Function Auto Race V2 --
-local AutoRaceToggle = false  -- Estado inicial do Auto Race
+-- Definir o Toggle de Auto Race
+local AutoRaceToggle = false  -- A variável que controla o estado do toggle
 
--- Função para ativar/desativar Auto Race
-local function toggleAutoRace(state)
-    AutoRaceToggle = state
-    if AutoRaceToggle then
-        print("Auto Race ativado")
-    else
-        print("Auto Race desativado")
-    end
-end
-
+-- Função Auto Race V2 --
 game:GetService('ReplicatedStorage').raceInProgress.Changed:Connect(function()
     if AutoRaceToggle then  -- Verifica se o Auto Race está ativado
         if game:GetService('ReplicatedStorage').raceInProgress.Value == true then
             game:GetService('ReplicatedStorage').rEvents.raceEvent:FireServer("joinRace")  -- Envia o evento para o servidor para entrar na corrida
+            print("Joined the race!")
         end
     end
 end)
@@ -67,13 +59,38 @@ game:GetService('ReplicatedStorage').raceStarted.Changed:Connect(function()
             -- Teleporta o jogador para a posição de corrida quando a corrida começar
             for i, v in pairs(game:GetService('Workspace').raceMaps:GetChildren()) do
                 local OldFinishPosition = v.finishPart.CFrame
-                v.finishPart.CFrame = Player.Character.HumanoidRootPart.CFrame
-                wait()
+                v.finishPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                wait(1)
                 v.finishPart.CFrame = OldFinishPosition
+            end
+            print("Race started, ready to race!")
+        end
+    end
+end)
+
+game:GetService('ReplicatedStorage').raceEnded.Changed:Connect(function()
+    if AutoRaceToggle then  -- Verifica se o Auto Race está ativado
+        if game:GetService('ReplicatedStorage').raceEnded.Value == true then
+            -- Verifica se o jogador ganhou a corrida
+            local player = Players.LocalPlayer
+            if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                -- Aqui podemos definir uma condição para determinar se o jogador venceu
+                -- Exemplo simples de verificação, dependendo da estrutura do jogo
+                if player.Character.HumanoidRootPart.Position == game:GetService("Workspace").raceMaps.finishPart.Position then
+                    print("You won the race!")
+                else
+                    print("You lost the race!")
+                end
             end
         end
     end
 end)
+
+-- Função para ativar/desativar o Auto Race
+local function ToggleAutoRace(state)
+    AutoRaceToggle = state
+    print("Auto Race Toggle: " .. (AutoRaceToggle and "Enabled" or "Disabled"))
+end
 
 
 --// VyrosxC Hub UI \\--
@@ -107,8 +124,13 @@ tab1.newInput("Walk Speed", "Select Your Walk Speed.", function()
     print("Invalid value for WalkSpeed: " .. text)
 end)
 
-tab1.newToggle("Auto Race V2", "The Best Auto Race11 ", true, function(Value)
-    toggleAutoRace(Value)  -- Controla o estado do Auto Race
+tab1.newToggle("Auto Race V2", "The Best Auto Race 💀", true, function(Value)
+    ToggleAutoRace(Value)
+    if AutoRaceToggle then
+        print("Auto Race Started!")
+    else
+        print("Auto Race Stopped!")
+    end
 end)
 
 -- Create the second tab with a different image ID
