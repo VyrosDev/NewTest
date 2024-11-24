@@ -23,63 +23,6 @@ end
 
 
 
-
--- Function Auto Race V2 --
-local AutoRaceToggle = false  
-local Player = game.Players.LocalPlayer  
-
--- Conectar à mudança da variável 'raceInProgress'
-game:GetService('ReplicatedStorage').raceInProgress.Changed:Connect(function()
-    if AutoRaceToggle then  -- Verifica se o Auto Race está ativado
-        if game:GetService('ReplicatedStorage').raceInProgress.Value == true then
-            game:GetService('ReplicatedStorage').rEvents.raceEvent:FireServer("joinRace")  -- Envia o evento para o servidor para entrar na corrida
-        end
-    end
-end)
-
-game:GetService('ReplicatedStorage').raceStarted.Changed:Connect(function()
-    if AutoRaceToggle then  
-        if game:GetService('ReplicatedStorage').raceStarted.Value == true then
-          
-            for i, v in pairs(game:GetService('Workspace').raceMaps:GetChildren()) do
-             
-                if v:FindFirstChild("finishPart") then
-                    local OldFinishPosition = v.finishPart.CFrame
-                    v.finishPart.CFrame = Player.Character.HumanoidRootPart.CFrame 
-                    wait()
-                    v.finishPart.CFrame = OldFinishPosition 
-                end
-            end
-        end
-    end
-end)
-
-local function ToggleAutoRace(state)
-    AutoRaceToggle = state
-    print("Auto Race Toggle: " .. (AutoRaceToggle and "Enabled" or "Disabled"))
-end
-
-game:GetService('ReplicatedStorage').raceStarted.Changed:Connect(function()
-    if AutoRaceToggle then  -- Verifica se o Auto Race está ativado
-        if game:GetService('ReplicatedStorage').raceStarted.Value == true then
-            -- Teleporta o jogador para a posição de corrida quando a corrida começar
-            for i, v in pairs(game:GetService('Workspace').raceMaps:GetChildren()) do
-                -- Verificar se a parte de final de corrida (finishPart) existe
-                if v:FindFirstChild("finishPart") then
-                    local OldFinishPosition = v.finishPart.CFrame
-                    v.finishPart.CFrame = Player.Character.HumanoidRootPart.CFrame 
-                    wait()  
-                    v.finishPart.CFrame = OldFinishPosition  
-                end
-            end
-        end
-    end
-end)
-
-
-
-
-
 -- Function Hip Height --
 local function setHipHeight(value)
     local player = game.Players.LocalPlayer
@@ -279,7 +222,7 @@ end
 
 
 
--- Function Auto Rebirth Stopping Point
+-- Function Auto Rebirth Stopping Point --
 local targetRebirth = 99999  
 local currentRebirths = 0  
 
@@ -318,6 +261,137 @@ local function autoRebirth()
         task.wait(0.7)  
     end
 end
+
+
+
+-- Function Auto Race V1 --
+local function teleportToMaps()
+    while _G.Farm do
+        pcall(function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(48.311, 36.315, -8680.453) 
+            wait(0.3)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1686.075, 36.315, -5946.634) 
+            wait(0.3)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1001.331, 36.315, -10986.218) 
+            wait(0.3)
+        end)
+    end
+end
+
+local function teleportToSpace()
+    while _G.Farm do
+        pcall(function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4970.01709, 36.0000916, -4805.07861)
+            wait(0.3)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4945.31689, 36.0000916, -4805.07861) 
+            wait(0.3)
+        end)
+    end
+end
+
+local function teleportToDesert()
+    while _G.Farm do
+        pcall(function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(636.770996, 161.306763, 9718.75)
+            wait(0.3)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2061.12476, 219.799164, 17953.8984) 
+            wait(0.3)
+        end)
+    end
+end
+
+local function stopAutoFarm()
+    _G.Farm = false
+end
+
+local function toggleAutoRaces(state)
+    _G.Farm = state
+    if state then
+        spawn(function()
+            while _G.Farm do
+                pcall(function()
+             
+                    game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace")
+                    wait()
+                
+                    local part = game.Players.LocalPlayer.Character.HumanoidRootPart
+                    for _, v in pairs(game:GetService("Workspace").raceMaps:GetDescendants()) do
+                        if v.Name == "Decal" and v.Parent then
+                            firetouchinterest(part, v.Parent, 0)
+                            wait()
+                            firetouchinterest(part, v.Parent, 1)
+                        end
+                    end
+                end)
+                wait()
+            end
+        end)
+        
+        if _G.SelectedTeleport == "Space" then
+            teleportToSpace()
+        elseif _G.SelectedTeleport == "Main City" then
+            teleportToMaps() 
+        elseif _G.SelectedTeleport == "Desert" then
+            teleportToDesert() 
+        end
+    else
+        stopAutoFarm()
+    end
+end
+
+
+
+-- Function Auto Race V2 --
+local AutoRaceToggle = false  
+local Player = game.Players.LocalPlayer  
+
+-- Conectar à mudança da variável 'raceInProgress'
+game:GetService('ReplicatedStorage').raceInProgress.Changed:Connect(function()
+    if AutoRaceToggle then  -- Verifica se o Auto Race está ativado
+        if game:GetService('ReplicatedStorage').raceInProgress.Value == true then
+            game:GetService('ReplicatedStorage').rEvents.raceEvent:FireServer("joinRace")  -- Envia o evento para o servidor para entrar na corrida
+        end
+    end
+end)
+
+game:GetService('ReplicatedStorage').raceStarted.Changed:Connect(function()
+    if AutoRaceToggle then  
+        if game:GetService('ReplicatedStorage').raceStarted.Value == true then
+          
+            for i, v in pairs(game:GetService('Workspace').raceMaps:GetChildren()) do
+             
+                if v:FindFirstChild("finishPart") then
+                    local OldFinishPosition = v.finishPart.CFrame
+                    v.finishPart.CFrame = Player.Character.HumanoidRootPart.CFrame 
+                    wait()
+                    v.finishPart.CFrame = OldFinishPosition 
+                end
+            end
+        end
+    end
+end)
+
+local function ToggleAutoRace(state)
+    AutoRaceToggle = state
+    print("Auto Race Toggle: " .. (AutoRaceToggle and "Enabled" or "Disabled"))
+end
+
+game:GetService('ReplicatedStorage').raceStarted.Changed:Connect(function()
+    if AutoRaceToggle then  -- Verifica se o Auto Race está ativado
+        if game:GetService('ReplicatedStorage').raceStarted.Value == true then
+            -- Teleporta o jogador para a posição de corrida quando a corrida começar
+            for i, v in pairs(game:GetService('Workspace').raceMaps:GetChildren()) do
+                -- Verificar se a parte de final de corrida (finishPart) existe
+                if v:FindFirstChild("finishPart") then
+                    local OldFinishPosition = v.finishPart.CFrame
+                    v.finishPart.CFrame = Player.Character.HumanoidRootPart.CFrame 
+                    wait()  
+                    v.finishPart.CFrame = OldFinishPosition  
+                end
+            end
+        end
+    end
+end)
 
 
 
