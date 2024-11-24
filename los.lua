@@ -56,9 +56,21 @@ end
 game:GetService('ReplicatedStorage').raceInProgress.Changed:Connect(function()
     if AutoRaceToggle then  -- Verifica se o Auto Race está ativado
         if game:GetService('ReplicatedStorage').raceInProgress.Value == true then
-            -- Envia o evento para o servidor para entrar na corrida
-            game:GetService('ReplicatedStorage').rEvents.raceEvent:FireServer("joinRace")
-            print("Entrando na corrida...")
+            game:GetService('ReplicatedStorage').rEvents.raceEvent:FireServer("joinRace")  -- Envia o evento para o servidor para entrar na corrida
+        end
+    end
+end)
+
+game:GetService('ReplicatedStorage').raceStarted.Changed:Connect(function()
+    if AutoRaceToggle then  -- Verifica se o Auto Race está ativado
+        if game:GetService('ReplicatedStorage').raceStarted.Value == true then
+            -- Teleporta o jogador para a posição de corrida quando a corrida começar
+            for i, v in pairs(game:GetService('Workspace').raceMaps:GetChildren()) do
+                local OldFinishPosition = v.finishPart.CFrame
+                v.finishPart.CFrame = Player.Character.HumanoidRootPart.CFrame
+                wait()
+                v.finishPart.CFrame = OldFinishPosition
+            end
         end
     end
 end)
@@ -95,7 +107,7 @@ tab1.newInput("Walk Speed", "Select Your Walk Speed.", function()
     print("Invalid value for WalkSpeed: " .. text)
 end)
 
-tab1.newToggle("Auto Race V2", "The Best Auto Race ", true, function(Value)
+tab1.newToggle("Auto Race V2", "The Best Auto Race11 ", true, function(Value)
     toggleAutoRace(Value)  -- Controla o estado do Auto Race
 end)
 
