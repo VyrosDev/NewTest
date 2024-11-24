@@ -228,6 +228,17 @@ local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/
 
 local window = DrRayLibrary:Load("VyrosxC Hub", "Default")
 
+-- Configurar cores personalizadas antes de adicionar elementos
+local mainColor = Color3.fromRGB(0, 0, 0)       -- Preto (cor principal)
+local secondColor = Color3.fromRGB(255, 0, 0)   -- Vermelho (cor secundária)
+
+-- Verifique se a função `SetTheme` existe
+if window.SetTheme then
+    window:SetTheme(mainColor, secondColor)
+else
+    warn("A função SetTheme não está disponível nesta versão da biblioteca.")
+end
+
 -- Tab1
 local tab1 = DrRayLibrary.newTab("Main", "100789040568622")
 
