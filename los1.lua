@@ -228,19 +228,10 @@ local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/
 
 local window = DrRayLibrary:Load("VyrosxC Hub", "Default")
 
--- Configurar cores personalizadas antes de adicionar elementos
-local mainColor = Color3.fromRGB(0, 0, 0)       -- Preto (cor principal)
-local secondColor = Color3.fromRGB(255, 0, 0)   -- Vermelho (cor secundária)
-
--- Verifique se a função `SetTheme` existe
-if window.SetTheme then
-    window:SetTheme(mainColor, secondColor)
-else
-    warn("A função SetTheme não está disponível nesta versão da biblioteca.")
-end
-
 -- Tab1
-local tab1 = DrRayLibrary.newTab("Main", "100789040568622")
+local tab1 = DrRayLibrary.newTab("Main", "rbxassetid://100789040568622")
+
+
 
 -- Section
 tab1.newLabel("Main")
@@ -406,7 +397,7 @@ tab3.newDropdown("Select Speed", "Speed", {"None", "x50", "x75", "x100", "x150",
 end)
 
 -- Toggle for Auto Farm
-tab3.newToggle("Auto Farm", "Toggle", true, function(toggleState) 
+tab3.newToggle("Auto Farm", "Toggle", false, function(toggleState) 
     isCollecting = toggleState
     print("Auto Farm Status: " .. (isCollecting and "Enabled" or "Disabled"))
 
