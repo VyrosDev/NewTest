@@ -226,16 +226,7 @@ end
 --// VyrosxC Hub \\--
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/VyrosxC-Hub/NewTest/main/los2.lua"))()
 
-local window = DrRayLibrary:Load("VyrosxC", "Default")
-
-local tab = window.newTab("Features Tab", "ImageIdHere")
-
--- Customize the theme colors (Main and Secondary)
-local mainColor = Color3.fromRGB(0, 0, 0)       -- Black (Main Color)
-local secondColor = Color3.fromRGB(255, 0, 0)   -- Red (Secondary Color)
-window:SetTheme(mainColor, secondColor)
-
-
+local window = DrRayLibrary:Load("VyrosxC Hub", "Default")
 
 -- Tab1
 local tab1 = DrRayLibrary.newTab("Main", "100789040568622")
@@ -413,3 +404,15 @@ tab3.newToggle("Auto Farm", "Toggle", true, function(toggleState)
         wait(0.3) 
     end
 end)
+
+-- OPTIONAL: Set theme after all elements are loaded
+task.wait(0) -- Slight delay to ensure UI is initialized
+local mainColor = Color3.fromRGB(0, 0, 0)       -- Black (Main Color)
+local secondColor = Color3.fromRGB(255, 0, 0)   -- Red (Secondary Color)
+
+-- Safeguard: Ensure `SetTheme` exists
+if window.SetTheme then
+    window:SetTheme(mainColor, secondColor)
+else
+    print("Warning: SetTheme function not found in this library version.")
+end
