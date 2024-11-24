@@ -399,6 +399,7 @@ end)
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/VyrosxC-Hub/NewTest/main/los2.lua"))()
 
 local window = DrRayLibrary:Load("VyrosxC Hub", "Default")
+
 -- Tab1
 local tab1 = DrRayLibrary.newTab("Main", "rbxassetid://100789040568622")
 
@@ -684,4 +685,9 @@ tab5.newToggle("Auto Fill Race", "Toggle", false, function(value)
     end
 end)
 
-local window = DrRayLibrary:Load("VyrosxC Hub 2", "Default")
+local window2 = DrRayLibrary2:Load("VyroxC Hub 2", "ImageIdHere")
+-- Tab1
+local tab1 = DrRayLibrary2.newTab("Main", "rbxassetid://100789040568622")
+
+-- Section
+tab1.newLabel("Main 2")
