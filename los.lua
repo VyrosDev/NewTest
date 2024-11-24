@@ -176,6 +176,53 @@ local function SelectLocation(location)
 end
 
 
+
+-- Function Auto Farm --
+local selectedLocation = "None"
+local function SetLocation(location)
+    selectedLocation = location
+    print("Selected location: " .. location)
+end
+
+local selectedOrb = "None"
+local function SetOrb(orb)
+    selectedOrb = orb
+    print("Orb selected: " .. orb)
+end
+
+local collectionSpeed = "x150"
+local speedMap = {
+    ["x50"] = 50, 
+    ["x75"] = 75, 	
+    ["x100"] = 100,	
+    ["x150"] = 150,
+    ["x175"] = 175,
+    ["x200"] = 200,	
+    ["x250"] = 250,
+    ["x275"] = 275,	
+    ["x300"] = 300	
+}
+local function SetCollectionSpeed(speed)
+    collectionSpeed = speed
+    print("Selected collection speed: " .. speed)
+end
+
+local function CollectOrbs()
+    if selectedLocation == "None" or selectedOrb == "None" then
+        print("Select a location and an Orb before collecting.")
+        return
+    end
+
+    local repetitions = speedMap[collectionSpeed] or 100 
+    print("Collecting " .. selectedOrb .. " in " .. selectedLocation .. " with " .. repetitions .. " repetitions.")
+
+    for i = 1, repetitions do
+        game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", selectedOrb, selectedLocation)
+    end
+end
+
+
+
 --// VyrosxC Hub \\--
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/VyrosxC-Hub/NewTest/main/los2.lua"))()
 
@@ -322,4 +369,40 @@ tab2.newDropdown("Select Spawn Location", "Teleports", {"Main City", "Desert", "
   
     SelectLocation(selectedLocation)
     print("Selected Spawn Location: " .. selectedLocation)
+end)
+
+
+
+-- Tab3
+local tab3 = DrRayLibrary.newTab("Auto Farm", "ImageIdLogoHere")
+
+-- Section 
+tab2.newLabel("Auto Farm")
+
+tab3.newDropdown("Select City", "City", {"None", "City", "Magma City"}, function(selectedLocation)
+    SetLocation(selectedLocation)
+    print("Selected Location: " .. selectedLocation)
+end)
+
+-- Dropdown to Select Orb
+tab3.newDropdown("Select Orb", "Orb", {"None", "Red Orb", "Yellow Orb"}, function(selectedOrb)
+    SetOrb(selectedOrb)
+    print("Selected Orb: " .. selectedOrb)
+end)
+
+-- Dropdown to Select Collection Speed
+tab3.newDropdown("Select Speed", "Speed", {"None", "x50", "x75", "x100", "x150", "x175", "x200", "x250", "x275", "x300"}, function(selectedSpeed)
+    SetCollectionSpeed(selectedSpeed)
+    print("Selected Collection Speed: " .. selectedSpeed)
+end)
+
+-- Toggle for Auto Farm
+tab3.newToggle("Auto Farm", "Toggle", true, function(toggleState) 
+    isCollecting = toggleState
+    print("Auto Farm Status: " .. (isCollecting and "Enabled" or "Disabled"))
+
+    while isCollecting do
+        CollectOrbs()
+        wait(0.3) 
+    end
 end)
