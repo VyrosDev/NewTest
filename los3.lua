@@ -643,7 +643,7 @@ end)
 
 
 
--- Tab6
+-- Tab5
 local tab5 = DrRayLibrary.newTab("Auto Race", "rbxassetid://97860628277392")
 
 -- Section 
@@ -684,3 +684,11 @@ tab5.newToggle("Auto Fill Race", "Toggle", false, function(value)
         end)
     end
 end)
+
+
+
+-- Tab6
+local tab6 = DrRayLibrary.newTab("New Test", "rbxassetid://97860628277392")
+
+-- Section 
+tab6.newLabel("Test New")
