@@ -131,7 +131,7 @@ end)
 -- Section
 tab1.newLabel("Player Settings")
 
-tab.newInput("Walk Speed", "Enter a Value For Walk Speed", function(value)
+tab1.newInput("Walk Speed", "Enter a Value For Walk Speed", function(value)
     local numericValue = tonumber(value) 
     if numericValue then
         local player = game.Players.LocalPlayer
