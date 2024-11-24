@@ -105,6 +105,31 @@ end
 
 
 
+
+-- Function Anti-Kick --
+local function AntiKick()
+    local vu = game:GetService("VirtualUser")
+    game:GetService("Players").LocalPlayer.Idled:Connect(function()
+        vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+        wait(1)
+        vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+    end)
+end
+
+-- Function Low Graphics --
+local function optimizeFpsPing()
+    for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
+        if v:IsA("BasePart") and not v.Parent:FindFirstChild("Humanoid") then
+            v.Material = Enum.Material.SmoothPlastic
+            if v:IsA("Texture") then
+                v:Destroy()
+            end
+        end
+    end
+end
+
+
+
 --// VyrosxC Hub \\--
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/VyrosxC-Hub/NewTest/main/los2.lua"))()
 
@@ -166,6 +191,35 @@ tab1.newInput("Hip Height", "Default Value '2.5'", function(value)
         print("Invalid value! Please enter a number.")
     end
 end)
+
+
+
+-- Section
+tab1.newLabel("Game Options")
+
+tab1.newButton("Anti-Kick", "Anti 20 Min Bot", function()
+    AntiKick()  -- Activates the Anti-Kick function
+    print("Anti-Kick activated!")
+end)
+
+tab1.newButton("Low Graphics", "FPS + Ping", function()
+    optimizeFpsPing()  -- Activates the Low Graphics function
+    print("Graphics settings optimized!")
+end)
+
+
+
+-- Section
+tab1.newLabel("Emergency")
+
+tab1.newButton("Re-join The Game", "Re-Join", function()
+    -- Teleports the player back to the same game instance
+    local teleportService = game:GetService("TeleportService")
+    local player = game:GetService("Players").LocalPlayer
+    teleportService:Teleport(game.PlaceId, player)  -- Teleports to the current PlaceId
+    print("Trying to get into the game...")  -- Confirms that the action was triggered
+end)
+
 
 tab1.newToggle("Auto Race V2", "Best Auto Race 💀", false, function(Value)
     ToggleAutoRace(Value)  -- Ativa ou desativa o Auto Race com base no valor do toggle
