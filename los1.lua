@@ -228,6 +228,11 @@ local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/
 
 local window = DrRayLibrary:Load("VyrosxC Hub", "Default")
 
+-- Customize the theme colors
+local mainColor = Color3.fromRGB(0, 0, 0)       
+local secondColor = Color3.fromRGB(255, 0, 0)   
+window:SetTheme(mainColor, secondColor)
+
 
 
 -- Tab1
