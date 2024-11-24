@@ -53,6 +53,16 @@ local function toggleAutoRace(state)
     end
 end
 
+game:GetService('ReplicatedStorage').raceInProgress.Changed:Connect(function()
+    if AutoRaceToggle then  -- Verifica se o Auto Race está ativado
+        if game:GetService('ReplicatedStorage').raceInProgress.Value == true then
+            -- Envia o evento para o servidor para entrar na corrida
+            game:GetService('ReplicatedStorage').rEvents.raceEvent:FireServer("joinRace")
+            print("Entrando na corrida...")
+        end
+    end
+end)
+
 
 --// VyrosxC Hub UI \\--
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/VyrosxC-Hub/NewTest/main/los2.lua"))()
@@ -85,7 +95,7 @@ tab1.newInput("Walk Speed", "Select Your Walk Speed.", function()
     print("Invalid value for WalkSpeed: " .. text)
 end)
 
-tab1.newToggle("Auto Race V2", "The Best Auto Race 💀", true, function(Value)
+tab1.newToggle("Auto Race V2", "The Best Auto Race ", true, function(Value)
     toggleAutoRace(Value)  -- Controla o estado do Auto Race
 end)
 
