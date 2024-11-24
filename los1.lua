@@ -286,7 +286,6 @@ end
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/VyrosxC-Hub/NewTest/main/los2.lua"))()
 
 local window = DrRayLibrary:Load("VyrosxC Hub", "Default")
-
 -- Tab1
 local tab1 = DrRayLibrary.newTab("Main", "rbxassetid://100789040568622")
 
@@ -495,5 +494,3 @@ tab3.newToggle("Hoops V2", "Toggle", false, function(toggleState)
         print("Hoop Farm V2 Disabled!")
     end
 end)
-
-
