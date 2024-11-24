@@ -130,6 +130,7 @@ end
 
 
 
+
 -- Function City Teleports --
 local function SelectCity(city)
     if city == "Main City" then
@@ -140,6 +141,37 @@ local function SelectCity(city)
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-11051.4258, 216.940002, 4886.27832, 0.987576485, 3.03587235e-08, -0.157139242, -3.89276664e-08, 1, -5.14532452e-08, 0.157139242, 5.69310785e-08, 0.987576485)
     elseif city == "Legends Highway" then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-13095.9746, 214.580338, 5895.57568, 0.999146283, 0.0376458429, -0.0170128513, -0.037201196, 0.99897629, 0.0257374309, 0.0179643426, -0.0250825603, 0.999523938)
+    end
+end
+
+-- Function Maps Teleports --
+local function SelectMap(location)
+    if location == "Desert" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2506.85156, 14.74121, 4353.92725, -0.0108262217, 3.44026461e-08, 0.999941409, 4.99142838e-10, 1, -3.43992568e-08, -0.999941409, 1.26699637e-10, -0.0108262217)
+    elseif location == "Space" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-346.1203, 3.85000086, 577.441223, 0.649530411, -5.26415e-08, 0.760335565, -2.8906797e-08, 1, 9.39287119e-08, -0.760335565, -8.29884286e-08, 0.649530411)
+    end
+end
+
+-- Function Chest Teleports --
+local function SelectChest(chest)
+    if chest == "Main City Chest" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-668.435242, 64.7499619, -263.600342, -0.588192225, -6.5145052e-08, -0.808721185, 4.4101709e-09, 1, -8.37607317e-08, 0.808721185, -5.28340109e-08, -0.588192225)
+    elseif chest == "Snow City Chest" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-591.912415, 72.749939, 2143.3291, -0.99671495, 7.0440322e-08, -0.080989778, 7.61660246e-08, 1, -6.76071892e-08, 0.080989778, -7.3553764e-08, -0.99671495)
+    elseif chest == "Magma City Chest" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2482.57764, 68.8001709, 3992.08301, -0.688194096, 3.17123816e-09, 0.725526631, 2.77723515e-08, 1, 2.19723582e-08, -0.725526631, 3.52708263e-08, -0.688194096)
+    end
+end
+
+-- Function Spawn Teleports --
+local function SelectLocation(location)
+    if location == "Main City" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-555.846985, 3.80000067, 399.529388, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+    elseif location == "Desert" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(262.487244, 645.934387, -180.146057, 0.999046028, 0, 0.043669384, 0, 1, 0, -0.043669384, 0, 0.999046028)
+    elseif location == "Space" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(247.883865, 73.0481033, -272.587677, 0.993579924, -8.65447536e-09, -0.113132581, -5.42947631e-10, 1, -8.12669327e-08, 0.113132581, 8.08066147e-08, 0.993579924)
     end
 end
 
@@ -257,4 +289,37 @@ tab2.newDropdown("Select City", "Teleports", {"Main City", "Snow City", "Magma C
     -- Call the SelectCity function with the selected city
     SelectCity(selectedCity)
     print("Selected City: " .. selectedCity)
+end)
+
+
+
+-- Section
+tab2.newLabel("Map Teleports")
+
+tab2.newDropdown("Select Map", "Teleports", {"Desert", "Space"}, function(selectedMap)
+  
+    SelectMap(selectedMap)
+    print("Selected Map: " .. selectedMap)
+end)
+
+
+
+-- Section 
+tab2.newLabel("Chest Teleports")
+
+tab2.newDropdown("Select Chest", "Teleports", {"Main City Chest", "Snow City Chest", "Magma City Chest"}, function(selectedChest)
+ 
+    SelectChest(selectedChest)
+    print("Selected Chest: " .. selectedChest)
+end)
+
+
+
+-- Section
+tab2.newLabel("Spawn Teleports")
+
+tab2.newDropdown("Select Spawn Location", "Teleports", {"Main City", "Desert", "Space"}, function(selectedLocation)
+  
+    SelectLocation(selectedLocation)
+    print("Selected Spawn Location: " .. selectedLocation)
 end)
