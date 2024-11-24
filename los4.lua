@@ -683,3 +683,5 @@ tab5.newToggle("Auto Fill Race", "Toggle", false, function(value)
         end)
     end
 end)
+
+local window = DrRayLibrary:Load("VyrosxC Hub 2", "Default")
