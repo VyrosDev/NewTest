@@ -1,4 +1,4 @@
-local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/CkVyros/NewTest/refs/heads/main/teste2.lua"))()
+local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/CkVyros/NewTest/refs/heads/main/testa2.lua"))()
 
 local Window = WindUI:CreateWindow({
     Title = "WindUI Library", -- UI Title
