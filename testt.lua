@@ -20,7 +20,7 @@ local Window = WindUI:CreateWindow({
 
 Window:EditOpenButton({
     Title = "Open UI Button",
-    Icon = "image-upscale",  -- New icon
+    Icon = "rbxassetid://82291816564081",  -- New icon
     CornerRadius = UDim.new(0,10),
     StrokeThickness = 3,
     Color = ColorSequence.new(
