@@ -1,6 +1,56 @@
---[[
-	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
-]]
+--// Variables \\--
+
+getgenv().HoopFarm = false
+
+getgenv().OpenEgg = false -- Fixo
+
+getgenv().eggOpen = false -- Temporário
+
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local Chr = Player.Character
+
+Player.CharacterAdded:Connect(function()
+    Chr = Player.Character
+end)
+
+local ChrHead = Chr.Head
+local Humanoid = Chr.Humanoid
+local Root = Chr.HumanoidRootPart
+
+--// Tables \\--
+
+local Crystals = {}
+
+--// Functions \\--
+
+-- Function Expand Torso --
+local function ExpandTorso()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local torso = character:WaitForChild("UpperTorso")
+
+    -- Definindo a taxa de expansão
+    local expansionRate = Vector3.new(2, 2, 2) 
+
+    -- Expande o torso
+    torso.Size = torso.Size + expansionRate
+end
+
+-- Function Reset Character --
+local function ResetCharacter()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+
+    -- Destrói a estrutura atual do personagem (quebrando os joints)
+    character:BreakJoints()
+
+    -- O Roblox vai automaticamente gerar um novo personagem, retornando ao seu estado inicial
+    print("The character has been reset to its original state!")
+end
+
+
 repeat task.wait(0.25) until game:IsLoaded();
 getgenv().Image = "rbxassetid://82291816564081"; -- put a asset id in here to make it work
 getgenv().ToggleUI = "E" -- This where you can Toggle the Fluent ui library
@@ -41,10 +91,10 @@ task.spawn(function()
         end)
     end
 end)
-local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/CkVyros/NewTest/refs/heads/main/teste2.lua"))()
+local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/CkVyros/NewTest/refs/heads/Home/teste2.lua"))()
 
 local Window = Fluent:CreateWindow({
-    Title = "Vyros Hub |" .. Fluent.Version,
+    Title = "Vyros Hub | " .. Fluent.Version,
     SubTitle = "Legends Of Speed",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
@@ -66,47 +116,40 @@ do
     Fluent:Notify({
         Title = "Vyros Hub",
         Content = "Welcome and enjoy!",
-        SubContent = "SubContent", -- Optional
+        SubContent = "Nothing Here", -- Optional
         Duration = 10 -- Set to nil to make the notification not disappear
     })
 
 
 
-    Tabs.Main:AddParagraph({
+    Tabs.Home:AddParagraph({
         Title = "Paragraph",
         Content = "This is a paragraph.\nSecond line!"
     })
 
 
 
-    Tabs.Main:AddButton({
-        Title = "Button",
-        Description = "Very important button",
-        Callback = function()
-            Window:Dialog({
-                Title = "Title",
-                Content = "This is a dialog",
-                Buttons = {
-                    {
-                        Title = "Confirm",
-                        Callback = function()
-                            print("Confirmed the dialog.")
-                        end
-                    },
-                    {
-                        Title = "Cancel",
-                        Callback = function()
-                            print("Cancelled the dialog.")
-                        end
-                    }
-                }
-            })
-        end
-    })
+    Tabs.Home:AddButton({
+    Title = "Expand Torso",
+    Description = "Expands the torso size",
+    Callback = function()
+        ExpandTorso() -- Chama a função de expansão do torso
+        print("Torso expandido com sucesso!")
+    end
+})
+
+    Tabs.Home:AddButton({
+    Title = "Reset Character",
+    Description = "Resets the character to its original state",
+    Callback = function()
+        ResetCharacter() -- Chama a função de reset do personagem
+        print("Personagem resetado!")
+    end
+})
 
 
 
-    local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Toggle", Default = false })
+    local Toggle = Tabs.Home:AddToggle("MyToggle", {Title = "Toggle", Default = false })
 
     Toggle:OnChanged(function()
         print("Toggle changed:", Options.MyToggle.Value)
@@ -116,7 +159,7 @@ do
 
 
     
-    local Slider = Tabs.Main:AddSlider("Slider", {
+    local Slider = Tabs.Home:AddSlider("Slider", {
         Title = "Slider",
         Description = "This is a slider",
         Default = 2,
@@ -136,7 +179,7 @@ do
 
 
 
-    local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
+    local Dropdown = Tabs.Home:AddDropdown("Dropdown", {
         Title = "Dropdown",
         Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
         Multi = false,
@@ -151,7 +194,7 @@ do
 
 
     
-    local MultiDropdown = Tabs.Main:AddDropdown("MultiDropdown", {
+    local MultiDropdown = Tabs.Home:AddDropdown("MultiDropdown", {
         Title = "Dropdown",
         Description = "You can select multiple values.",
         Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
@@ -175,7 +218,7 @@ do
 
 
 
-    local Colorpicker = Tabs.Main:AddColorpicker("Colorpicker", {
+    local Colorpicker = Tabs.Home:AddColorpicker("Colorpicker", {
         Title = "Colorpicker",
         Default = Color3.fromRGB(96, 205, 255)
     })
@@ -188,7 +231,7 @@ do
 
 
 
-    local TColorpicker = Tabs.Main:AddColorpicker("TransparencyColorpicker", {
+    local TColorpicker = Tabs.Home:AddColorpicker("TransparencyColorpicker", {
         Title = "Colorpicker",
         Description = "but you can change the transparency.",
         Transparency = 0,
@@ -204,7 +247,7 @@ do
 
 
 
-    local Keybind = Tabs.Main:AddKeybind("Keybind", {
+    local Keybind = Tabs.Home:AddKeybind("Keybind", {
         Title = "KeyBind",
         Mode = "Toggle", -- Always, Toggle, Hold
         Default = "LeftControl", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
@@ -247,7 +290,7 @@ do
     Keybind:SetValue("MB2", "Toggle") -- Sets keybind to MB2, mode to Hold
 
 
-    local Input = Tabs.Main:AddInput("Input", {
+    local Input = Tabs.Home:AddInput("Input", {
         Title = "Input",
         Default = "Default",
         Placeholder = "Placeholder",
