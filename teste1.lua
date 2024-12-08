@@ -2,7 +2,7 @@
 	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
 ]]
 repeat task.wait(0.25) until game:IsLoaded();
-getgenv().Image = "rbxassetid://75233926918790"; -- put a asset id in here to make it work
+getgenv().Image = "rbxassetid://82291816564081"; -- put a asset id in here to make it work
 getgenv().ToggleUI = "E" -- This where you can Toggle the Fluent ui library
 
 task.spawn(function()
@@ -41,7 +41,7 @@ local Window = Fluent:CreateWindow({
 })
 
 local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "house" }),
+    Main = Window:AddTab({ Title = "Main", Icon = "house-plus" }),
     Teleports = Window:AddTab({ Title = "Teleports", Icon = "arrow-left-right" }),	
     AutoFarm = Window:AddTab({ Title = "Auto Farm", Icon = "skull" }),	
     Settings = Window:AddTab({ Title = "Credits", Icon = "users" })
