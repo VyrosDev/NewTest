@@ -9,7 +9,6 @@ task.spawn(function()
     if not getgenv().LoadedMobileUI == true then getgenv().LoadedMobileUI = true
         local OpenUI = Instance.new("ScreenGui");
         local ImageButton = Instance.new("ImageButton");
-        local UICorner = Instance.new("UICorner");
         OpenUI.Name = "OpenUI";
         OpenUI.Parent = game:GetService("CoreGui");
         OpenUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
@@ -21,8 +20,9 @@ task.spawn(function()
         ImageButton.Image = getgenv().Image;
         ImageButton.Draggable = true;
         ImageButton.Transparency = 1;
-        UICorner.CornerRadius = UDim.new(0,200);
-        UICorner.Parent = ImageButton;
+
+        -- UICorner removido para manter o botão quadrado.
+
         ImageButton.MouseButton1Click:Connect(function()
             game:GetService("VirtualInputManager"):SendKeyEvent(true,getgenv().ToggleUI,false,game);
         end)
@@ -41,7 +41,7 @@ local Window = Fluent:CreateWindow({
 })
 
 local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "house-plus" }),
+    Main = Window:AddTab({ Title = "Main", Icon = "bolt" }),
     Teleports = Window:AddTab({ Title = "Teleports", Icon = "arrow-left-right" }),	
     AutoFarm = Window:AddTab({ Title = "Auto Farm", Icon = "skull" }),	
     Settings = Window:AddTab({ Title = "Credits", Icon = "users" })
@@ -51,10 +51,10 @@ local Options = Fluent.Options
 
 do
     Fluent:Notify({
-        Title = "Notification",
-        Content = "This is a notification",
+        Title = "Vyros Hub",
+        Content = "Welcome and enjoy!",
         SubContent = "SubContent", -- Optional
-        Duration = 5 -- Set to nil to make the notification not disappear
+        Duration = 10 -- Set to nil to make the notification not disappear
     })
 
 
@@ -251,24 +251,16 @@ do
 end
 
 
--- Addons:
--- SaveManager (Allows you to have a configuration system)
--- InterfaceManager (Allows you to have a interface managment system)
 
--- Hand the library over to our managers
+
+
 SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
 
--- Ignore keys that are used by ThemeManager.
--- (we dont want configs to save themes, do we?)
 SaveManager:IgnoreThemeSettings()
 
--- You can add indexes of elements the save manager should ignore
 SaveManager:SetIgnoreIndexes({})
 
--- use case for doing it this way:
--- a script hub could have themes in a global folder
--- and game configs in a separate folder per game
 InterfaceManager:SetFolder("FluentScriptHub")
 SaveManager:SetFolder("FluentScriptHub/specific-game")
 
@@ -284,6 +276,4 @@ Fluent:Notify({
     Duration = 5
 })
 
--- You can use the SaveManager:LoadAutoloadConfig() to load a config
--- which has been marked to be one that auto loads!
 SaveManager:LoadAutoloadConfig()
