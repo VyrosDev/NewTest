@@ -9,9 +9,12 @@ task.spawn(function()
     if not getgenv().LoadedMobileUI == true then getgenv().LoadedMobileUI = true
         local OpenUI = Instance.new("ScreenGui");
         local ImageButton = Instance.new("ImageButton");
+        local UICorner = Instance.new("UICorner");
+
         OpenUI.Name = "OpenUI";
         OpenUI.Parent = game:GetService("CoreGui");
         OpenUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
+
         ImageButton.Parent = OpenUI;
         ImageButton.BackgroundColor3 = Color3.fromRGB(105,105,105);
         ImageButton.BackgroundTransparency = 0.8
@@ -19,9 +22,10 @@ task.spawn(function()
         ImageButton.Size = UDim2.new(0,50,0,50);
         ImageButton.Image = getgenv().Image;
         ImageButton.Draggable = true;
-        ImageButton.Transparency = 1;
 
-        -- UICorner removido para manter o botão quadrado.
+        -- UICorner com bordas arredondadas sutis
+        UICorner.CornerRadius = UDim.new(0, 9);
+        UICorner.Parent = ImageButton;
 
         ImageButton.MouseButton1Click:Connect(function()
             game:GetService("VirtualInputManager"):SendKeyEvent(true,getgenv().ToggleUI,false,game);
@@ -36,12 +40,12 @@ local Window = Fluent:CreateWindow({
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
     Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
-    Theme = "Midnight",
+    Theme = "Dark",
     MinimizeKey = Enum.KeyCode.E -- Used when theres no MinimizeKeybind
 })
 
 local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "bolt" }),
+    Home = Window:AddTab({ Title = "Home", Icon = "home" }),
     Teleports = Window:AddTab({ Title = "Teleports", Icon = "arrow-left-right" }),	
     AutoFarm = Window:AddTab({ Title = "Auto Farm", Icon = "skull" }),	
     Settings = Window:AddTab({ Title = "Credits", Icon = "users" })
