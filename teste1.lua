@@ -1,3 +1,6 @@
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
 repeat task.wait(0.25) until game:IsLoaded();
 getgenv().Image = "rbxassetid://82291816564081"; -- put a asset id in here to make it work
 getgenv().ToggleUI = "E" -- This where you can Toggle the Fluent ui library
@@ -38,11 +41,11 @@ task.spawn(function()
         end)
     end
 end)
-local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/CkVyros/NewTest/refs/heads/Home/teste2.lua"))()
+local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/CkVyros/NewTest/refs/heads/main/teste2.lua"))()
 
 local Window = Fluent:CreateWindow({
-    Title = "Vyros Hub | " .. Fluent.Version,
-    SubTitle = "Legends Of Speed",
+    Title = "Fluent " .. Fluent.Version,
+    SubTitle = "by dawid",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
     Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
@@ -50,33 +53,13 @@ local Window = Fluent:CreateWindow({
     MinimizeKey = Enum.KeyCode.E -- Used when theres no MinimizeKeybind
 })
 
+--Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
-    Home = Window:AddTab({ Title = "Home", Icon = "home" }),
-    Teleports = Window:AddTab({ Title = "Teleports", Icon = "arrow-left-right" }),	
-    AutoFarm = Window:AddTab({ Title = "Auto Farm", Icon = "skull" }),	
-    Settings = Window:AddTab({ Title = "Credits", Icon = "users" })
+    Main = Window:AddTab({ Title = "Main", Icon = "" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
-local Options = Fluent.Options
-
-do
-    Fluent:Notify({
-        Title = "Vyros Hub",
-        Content = "Welcome and enjoy!",
-        SubContent = "Nothing Here", -- Optional
-        Duration = 10 -- Set to nil to make the notification not disappear
-    })
-
-
-
-    Tabs.Home:AddParagraph({
-        Title = "Paragraph",
-        Content = "This is a paragraph.\nSecond line!"
-    })
-
-
-
-    Tabs.Home:AddButton({
+Tabs.Main:AddButton({
     Title = "Expand Torso",
     Description = "Expands the torso size",
     Callback = function()
@@ -85,7 +68,7 @@ do
     end
 })
 
-    Tabs.Home:AddButton({
+Tabs.Main:AddButton({
     Title = "Reset Character",
     Description = "Resets the character to its original state",
     Callback = function()
@@ -96,163 +79,33 @@ do
 
 
 
-    local Toggle = Tabs.Home:AddToggle("MyToggle", {Title = "Toggle", Default = false })
+-- Functions // 
 
-    Toggle:OnChanged(function()
-        print("Toggle changed:", Options.MyToggle.Value)
-    end)
+-- Função para expandir o torso
+local function ExpandTorso()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local torso = character:WaitForChild("UpperTorso")
 
-    Options.MyToggle:SetValue(false)
+    -- Definindo a taxa de expansão
+    local expansionRate = Vector3.new(2, 2, 2)
 
-
-    
-    local Slider = Tabs.Home:AddSlider("Slider", {
-        Title = "Slider",
-        Description = "This is a slider",
-        Default = 2,
-        Min = 0,
-        Max = 5,
-        Rounding = 1,
-        Callback = function(Value)
-            print("Slider was changed:", Value)
-        end
-    })
-
-    Slider:OnChanged(function(Value)
-        print("Slider changed:", Value)
-    end)
-
-    Slider:SetValue(3)
-
-
-
-    local Dropdown = Tabs.Home:AddDropdown("Dropdown", {
-        Title = "Dropdown",
-        Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
-        Multi = false,
-        Default = 1,
-    })
-
-    Dropdown:SetValue("four")
-
-    Dropdown:OnChanged(function(Value)
-        print("Dropdown changed:", Value)
-    end)
-
-
-    
-    local MultiDropdown = Tabs.Home:AddDropdown("MultiDropdown", {
-        Title = "Dropdown",
-        Description = "You can select multiple values.",
-        Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
-        Multi = true,
-        Default = {"seven", "twelve"},
-    })
-
-    MultiDropdown:SetValue({
-        three = true,
-        five = true,
-        seven = false
-    })
-
-    MultiDropdown:OnChanged(function(Value)
-        local Values = {}
-        for Value, State in next, Value do
-            table.insert(Values, Value)
-        end
-        print("Mutlidropdown changed:", table.concat(Values, ", "))
-    end)
-
-
-
-    local Colorpicker = Tabs.Home:AddColorpicker("Colorpicker", {
-        Title = "Colorpicker",
-        Default = Color3.fromRGB(96, 205, 255)
-    })
-
-    Colorpicker:OnChanged(function()
-        print("Colorpicker changed:", Colorpicker.Value)
-    end)
-    
-    Colorpicker:SetValueRGB(Color3.fromRGB(0, 255, 140))
-
-
-
-    local TColorpicker = Tabs.Home:AddColorpicker("TransparencyColorpicker", {
-        Title = "Colorpicker",
-        Description = "but you can change the transparency.",
-        Transparency = 0,
-        Default = Color3.fromRGB(96, 205, 255)
-    })
-
-    TColorpicker:OnChanged(function()
-        print(
-            "TColorpicker changed:", TColorpicker.Value,
-            "Transparency:", TColorpicker.Transparency
-        )
-    end)
-
-
-
-    local Keybind = Tabs.Home:AddKeybind("Keybind", {
-        Title = "KeyBind",
-        Mode = "Toggle", -- Always, Toggle, Hold
-        Default = "LeftControl", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
-
-        -- Occurs when the keybind is clicked, Value is `true`/`false`
-        Callback = function(Value)
-            print("Keybind clicked!", Value)
-        end,
-
-        -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
-        ChangedCallback = function(New)
-            print("Keybind changed!", New)
-        end
-    })
-
-    -- OnClick is only fired when you press the keybind and the mode is Toggle
-    -- Otherwise, you will have to use Keybind:GetState()
-    Keybind:OnClick(function()
-        print("Keybind clicked:", Keybind:GetState())
-    end)
-
-    Keybind:OnChanged(function()
-        print("Keybind changed:", Keybind.Value)
-    end)
-
-    task.spawn(function()
-        while true do
-            wait(1)
-
-            -- example for checking if a keybind is being pressed
-            local state = Keybind:GetState()
-            if state then
-                print("Keybind is being held down")
-            end
-
-            if Fluent.Unloaded then break end
-        end
-    end)
-
-    Keybind:SetValue("MB2", "Toggle") -- Sets keybind to MB2, mode to Hold
-
-
-    local Input = Tabs.Home:AddInput("Input", {
-        Title = "Input",
-        Default = "Default",
-        Placeholder = "Placeholder",
-        Numeric = false, -- Only allows numbers
-        Finished = false, -- Only calls callback when you press enter
-        Callback = function(Value)
-            print("Input changed:", Value)
-        end
-    })
-
-    Input:OnChanged(function()
-        print("Input updated:", Input.Value)
-    end)
+    -- Expande o torso
+    torso.Size = torso.Size + expansionRate
 end
 
+-- Função para resetar o personagem
+local function ResetCharacter()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+
+    -- Destrói a estrutura atual do personagem (quebrando os joints)
+    character:BreakJoints()
+
+    -- O Roblox vai automaticamente gerar um novo personagem, retornando ao seu estado inicial
+    print("O personagem foi resetado para o estado original!")
+end
+-- Fim
 
 
 
@@ -274,61 +127,9 @@ SaveManager:BuildConfigSection(Tabs.Settings)
 Window:SelectTab(1)
 
 Fluent:Notify({
-    Title = "Welcome to Vyros Hub!",
+    Title = "Fluent",
     Content = "The script has been loaded.",
-    Duration = 5
-})
-
---// Variables \\--
-
-getgenv().HoopFarm = false
-
-getgenv().OpenEgg = false -- Fixo
-
-getgenv().eggOpen = false -- Temporário
-
-local RunService = game:GetService("RunService")
-local Players = game:GetService("Players")
-local Player = Players.LocalPlayer
-local Chr = Player.Character
-
-Player.CharacterAdded:Connect(function()
-    Chr = Player.Character
-end)
-
-local ChrHead = Chr.Head
-local Humanoid = Chr.Humanoid
-local Root = Chr.HumanoidRootPart
-
---// Tables \\--
-
-local Crystals = {}
-
---// Functions \\--
-
--- Function Expand Torso --
-local function ExpandTorso()
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    local torso = character:WaitForChild("UpperTorso")
-
-    -- Definindo a taxa de expansão
-    local expansionRate = Vector3.new(2, 2, 2) 
-
-    -- Expande o torso
-    torso.Size = torso.Size + expansionRate
-end
-
--- Function Reset Character --
-local function ResetCharacter()
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-
-    -- Destrói a estrutura atual do personagem (quebrando os joints)
-    character:BreakJoints()
-
-    -- O Roblox vai automaticamente gerar um novo personagem, retornando ao seu estado inicial
-    print("The character has been reset to its original state!")
-end
+    Duration = 8
+}
 
 SaveManager:LoadAutoloadConfig()
