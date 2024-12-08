@@ -2,7 +2,7 @@
 	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
 ]]
 repeat task.wait(0.25) until game:IsLoaded();
-getgenv().Image = "rbxassetid://101796603448640"; -- put a asset id in here to make it work
+getgenv().Image = "rbxassetid://75233926918790"; -- put a asset id in here to make it work
 getgenv().ToggleUI = "E" -- This where you can Toggle the Fluent ui library
 
 task.spawn(function()
@@ -31,18 +31,20 @@ end)
 local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/CkVyros/NewTest/refs/heads/main/teste2.lua"))()
 
 local Window = Fluent:CreateWindow({
-    Title = "Vyros Hub " .. Fluent.Version,
-    SubTitle = "Premium",
+    Title = "Vyros Hub |" .. Fluent.Version,
+    SubTitle = "Legends Of Speed",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
     Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
-    Theme = "Dark",
+    Theme = "Midnight",
     MinimizeKey = Enum.KeyCode.E -- Used when theres no MinimizeKeybind
 })
 
 local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+    Main = Window:AddTab({ Title = "Main", Icon = "house" }),
+    Teleports = Window:AddTab({ Title = "Teleports", Icon = "arrow-left-right" }),	
+    AutoFarm = Window:AddTab({ Title = "Auto Farm", Icon = "skull" }),	
+    Settings = Window:AddTab({ Title = "Credits", Icon = "users" })
 }
 
 local Options = Fluent.Options
