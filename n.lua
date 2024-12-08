@@ -28,7 +28,7 @@ task.spawn(function()
         end)
     end
 end)
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local Fluent = loadstring(game:HttpGet("hhttps://raw.githubusercontent.com/CkVyros/NewTest/refs/heads/main/teste2.lua"))()
 
 local Window = Fluent:CreateWindow({
     Title = "Fluent " .. Fluent.Version,
