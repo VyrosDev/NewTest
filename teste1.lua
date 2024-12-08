@@ -1,56 +1,3 @@
---// Variables \\--
-
-getgenv().HoopFarm = false
-
-getgenv().OpenEgg = false -- Fixo
-
-getgenv().eggOpen = false -- Temporário
-
-local RunService = game:GetService("RunService")
-local Players = game:GetService("Players")
-local Player = Players.LocalPlayer
-local Chr = Player.Character
-
-Player.CharacterAdded:Connect(function()
-    Chr = Player.Character
-end)
-
-local ChrHead = Chr.Head
-local Humanoid = Chr.Humanoid
-local Root = Chr.HumanoidRootPart
-
---// Tables \\--
-
-local Crystals = {}
-
---// Functions \\--
-
--- Function Expand Torso --
-local function ExpandTorso()
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    local torso = character:WaitForChild("UpperTorso")
-
-    -- Definindo a taxa de expansão
-    local expansionRate = Vector3.new(2, 2, 2) 
-
-    -- Expande o torso
-    torso.Size = torso.Size + expansionRate
-end
-
--- Function Reset Character --
-local function ResetCharacter()
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-
-    -- Destrói a estrutura atual do personagem (quebrando os joints)
-    character:BreakJoints()
-
-    -- O Roblox vai automaticamente gerar um novo personagem, retornando ao seu estado inicial
-    print("The character has been reset to its original state!")
-end
-
-
 repeat task.wait(0.25) until game:IsLoaded();
 getgenv().Image = "rbxassetid://82291816564081"; -- put a asset id in here to make it work
 getgenv().ToggleUI = "E" -- This where you can Toggle the Fluent ui library
@@ -331,5 +278,57 @@ Fluent:Notify({
     Content = "The script has been loaded.",
     Duration = 5
 })
+
+--// Variables \\--
+
+getgenv().HoopFarm = false
+
+getgenv().OpenEgg = false -- Fixo
+
+getgenv().eggOpen = false -- Temporário
+
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local Chr = Player.Character
+
+Player.CharacterAdded:Connect(function()
+    Chr = Player.Character
+end)
+
+local ChrHead = Chr.Head
+local Humanoid = Chr.Humanoid
+local Root = Chr.HumanoidRootPart
+
+--// Tables \\--
+
+local Crystals = {}
+
+--// Functions \\--
+
+-- Function Expand Torso --
+local function ExpandTorso()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local torso = character:WaitForChild("UpperTorso")
+
+    -- Definindo a taxa de expansão
+    local expansionRate = Vector3.new(2, 2, 2) 
+
+    -- Expande o torso
+    torso.Size = torso.Size + expansionRate
+end
+
+-- Function Reset Character --
+local function ResetCharacter()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+
+    -- Destrói a estrutura atual do personagem (quebrando os joints)
+    character:BreakJoints()
+
+    -- O Roblox vai automaticamente gerar um novo personagem, retornando ao seu estado inicial
+    print("The character has been reset to its original state!")
+end
 
 SaveManager:LoadAutoloadConfig()
