@@ -6,38 +6,25 @@ getgenv().Image = "rbxassetid://82291816564081"; -- put a asset id in here to ma
 getgenv().ToggleUI = "E" -- This where you can Toggle the Fluent ui library
 
 task.spawn(function()
-    if not getgenv().LoadedMobileUI == true then 
-        getgenv().LoadedMobileUI = true
+    if not getgenv().LoadedMobileUI == true then getgenv().LoadedMobileUI = true
         local OpenUI = Instance.new("ScreenGui");
         local ImageButton = Instance.new("ImageButton");
         local UICorner = Instance.new("UICorner");
-
         OpenUI.Name = "OpenUI";
         OpenUI.Parent = game:GetService("CoreGui");
         OpenUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
-
         ImageButton.Parent = OpenUI;
         ImageButton.BackgroundColor3 = Color3.fromRGB(105,105,105);
-        ImageButton.BackgroundTransparency = 0.8;
+        ImageButton.BackgroundTransparency = 0.8
         ImageButton.Position = UDim2.new(0.9,0,0.1,0);
         ImageButton.Size = UDim2.new(0,50,0,50);
         ImageButton.Image = getgenv().Image;
         ImageButton.Draggable = true;
-
-        -- Adiciona bordas arredondadas sutis
-        UICorner.CornerRadius = UDim.new(0, 9);
+        ImageButton.Transparency = 1;
+        UICorner.CornerRadius = UDim.new(0,200);
         UICorner.Parent = ImageButton;
-
-        -- Ajuste na função do clique para alternar a UI
         ImageButton.MouseButton1Click:Connect(function()
-            local CoreGui = game:GetService("CoreGui")
-            local UI = CoreGui:FindFirstChild("YourScriptUI") -- Nome do UI que você quer alternar
-
-            if UI then
-                UI.Enabled = not UI.Enabled -- Alterna a visibilidade da UI
-            else
-                warn("UI não encontrada!")
-            end
+            game:GetService("VirtualInputManager"):SendKeyEvent(true,getgenv().ToggleUI,false,game);
         end)
     end
 end)
@@ -76,38 +63,6 @@ Tabs.Main:AddButton({
         print("Personagem resetado!")
     end
 })
-
-
-
--- Functions // 
-
--- Função para expandir o torso
-local function ExpandTorso()
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    local torso = character:WaitForChild("UpperTorso")
-
-    -- Definindo a taxa de expansão
-    local expansionRate = Vector3.new(2, 2, 2)
-
-    -- Expande o torso
-    torso.Size = torso.Size + expansionRate
-end
-
--- Função para resetar o personagem
-local function ResetCharacter()
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-
-    -- Destrói a estrutura atual do personagem (quebrando os joints)
-    character:BreakJoints()
-
-    -- O Roblox vai automaticamente gerar um novo personagem, retornando ao seu estado inicial
-    print("O personagem foi resetado para o estado original!")
-end
--- Fim
-
-
 
 
 SaveManager:SetLibrary(Fluent)
