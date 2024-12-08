@@ -22,6 +22,5 @@ Tab:AddToggle({
 		print(Value)
 	end    
 })
-ImAToggle:Toggle(false)
 
 VyrosLib:Destroy()
